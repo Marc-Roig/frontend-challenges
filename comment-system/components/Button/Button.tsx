@@ -7,7 +7,6 @@ const Button = styled.button`
   margin: 1.5px;
   font-size: ${({ theme }) => theme.fontSizes.sm};
   font-weight: 500;
-  font-family: inherit;
   background-color: ${({ theme }) => theme.colors.primary[100]};
   cursor: pointer;
   transition: border-color 0.25s;
