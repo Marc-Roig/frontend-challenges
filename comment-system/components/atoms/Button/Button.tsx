@@ -1,15 +1,15 @@
 import styled from "styled-components";
 
 const Button = styled.button`
-  border-radius: 8px;
+  color: ${({ theme }) => theme.colors.secondary[200]};
+  border-radius: ${({ theme }) => theme.radius.lg};
   border-color: transparent;
-  padding: 0.5em 1.5em;
+  padding: 1em 2em;
   margin: 1.5px;
-  font-size: ${({ theme }) => theme.fontSizes.sm};
   font-weight: 500;
+  font-size: ${({ theme }) => theme.fontSizes.sm};
   background-color: ${({ theme }) => theme.colors.primary[100]};
   cursor: pointer;
-  transition: border-color 0.25s;
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.primary[300]};
@@ -19,8 +19,8 @@ const Button = styled.button`
   &:focus-visible {
     outline-style: solid;
     outline-color: ${({ theme }) => theme.colors.primary[200]};
-    outline-offset: 1.5px;
-    outline-width: 1.5px;
+    outline-offset: 2px;
+    outline-width: 2px;
   }
 `;
 
