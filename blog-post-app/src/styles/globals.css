@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* https://web.dev/building-a-color-scheme/ */
+html {
+    /* brand foundation */
+    --brand-hue: 195;
+    --brand-saturation: 80%;
+    --brand-lightness: 45%;
+
+    background-color: var(--surface1);
+    color: var(--text1);
+}
+
+.light {
+  color-scheme: light;
+  --brand: hsl(var(--brand-hue) var(--brand-saturation) var(--brand-lightness));
+  --brand-light: hsl(var(--brand-hue) var(--brand-saturation) calc(var(--brand-lightness) + 5%));
+  --text1: hsl(var(--brand-hue) var(--brand-saturation) 10%);
+  --text2: hsl(var(--brand-hue) 30% 30%);
+  --surface1: hsl(var(--brand-hue) 20% 92%);
+  --surface2: hsl(var(--brand-hue) 20% 99%);
+  --surface3: hsl(var(--brand-hue) 20% 96%);
+  --surface4: hsl(var(--brand-hue) 20% 85%);
+  --border: hsl(var(--brand-hue) 10% 50% / 15%);
+  --border-focus: hsl(var(--brand-hue) 40% 50% / 50%);
+}
+
+.dark {
+  color-scheme: dark;
+  --brand: hsl(
+    var(--brand-hue) 
+    calc(var(--brand-saturation) / 1.25)
+    calc(var(--brand-lightness) / 1.25)
+  );
+  --brand-light: hsl(
+    var(--brand-hue) 
+    calc(var(--brand-saturation) / 1.25)
+    calc(var(--brand-lightness) / 1.25 + 5%)
+  );
+  --text1: hsl(var(--brand-hue) 15% 85%);
+  --text2: hsl(var(--brand-hue) 5% 65%);
+  --surface1: hsl(var(--brand-hue) 10% 10%);
+  --surface2: hsl(var(--brand-hue) 10% 15%);
+  --surface3: hsl(var(--brand-hue) 5%  20%);
+  --surface4: hsl(var(--brand-hue) 5% 25%);
+  --border: hsl(var(--brand-hue) 10% 50% / 15%);
+  --border-focus: hsl(var(--brand-hue) 10% 50% / 50%);
+}
+
+.surface1 {
+  @apply bg-brand-surface1 text-brand-text2;
+}
+
+.surface2 {
+  @apply bg-brand-surface2 text-brand-text2;
+}
+
+.surface3 {
+  @apply bg-brand-surface3 text-brand-text1;
+}
+
+.surface4 {
+  @apply bg-brand-surface4 text-brand-text1;
+}
