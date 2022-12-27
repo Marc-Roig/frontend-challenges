@@ -1,18 +1,27 @@
 import type IComment from "@/types/Comment";
 import { trpc } from "@/utils/trpc";
-import { useRef, useState } from "react";
-import { Button } from "../../atoms/button";
-import { TextArea } from "../../atoms/text-area";
+import React, { type KeyboardEvent, useState } from "react";
+import { Button } from "../../ui/button";
+import { TextArea } from "../../ui/text-area";
 import useQueryUpdateComments from "./hooks/useQueryUpdateComments";
+
+interface CommentTextAreaProps {
+  postId: string;
+  parentComment?: IComment;
+  discardHandler?: () => void;
+  unfoldDefault?: boolean;
+  placeHolderDefault?: string;
+}
 
 export const CommentTextArea = ({
   postId,
   parentComment,
-}: {
-  postId: string;
-  parentComment?: IComment;
-}) => {
+  discardHandler,
+  unfoldDefault = false,
+  placeHolderDefault = "Add a comment",
+}: CommentTextAreaProps) => {
   const [commentText, setCommentText] = useState("");
+  const [isCommentUnfolded, setIsCommentUnfolded] = useState(unfoldDefault);
 
   // Update the comment list with the new comment
   const { addNewComment } = useQueryUpdateComments(postId);
@@ -24,6 +33,14 @@ export const CommentTextArea = ({
     },
   });
 
+  // Handle post by pressing control/cmd + enter
+  const handleKeyPress = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
+      handlePostComment();
+    }
+  };
+
+  // Post a comment
   const handlePostComment = () => {
     postComment.mutate({
       postId,
@@ -32,17 +49,41 @@ export const CommentTextArea = ({
     });
   };
 
+  // Discard the comment
+  const handleDiscard = () => {
+    if (discardHandler) discardHandler();
+    setCommentText("");
+    setIsCommentUnfolded(false);
+  };
+
   return (
-    <div className="flex w-full flex-wrap gap-4">
-      <TextArea
-        className="grow resize-none"
-        placeholder="Add a comment"
-        onChange={(e) => setCommentText(e.target.value)}
-        value={commentText}
-      />
-      <Button disabled={!commentText.length} onClick={handlePostComment}>
-        Post
-      </Button>
+    <div className="flex w-full flex-col gap-3">
+      <div className="flex w-full grow">
+        <TextArea
+          className={`grow ${
+            isCommentUnfolded ? "h-36" : "h-16"
+          } resize-none transition-all`}
+          placeholder={placeHolderDefault}
+          onChange={(e) => setCommentText(e.target.value)}
+          onSelect={() => setIsCommentUnfolded(true)}
+          onKeyDown={handleKeyPress}
+          value={commentText}
+        />
+      </div>
+      {isCommentUnfolded && (
+        <div className="flex gap-2">
+          <Button
+            variant="filled"
+            disabled={!commentText.length}
+            onClick={handlePostComment}
+          >
+            Post
+          </Button>
+          <Button variant="subtle" onClick={handleDiscard}>
+            Discard
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
@@ -50,7 +91,7 @@ export const CommentTextArea = ({
 const PostNewComment = ({ postId }: { postId: string }) => {
   return (
     <section className="flex flex-col gap-4 pt-2">
-      <h2 className="text-2xl font-semibold">Comments</h2>
+      <h2 className="text-2xl font-semibold">Discussion</h2>
       <CommentTextArea postId={postId} />
     </section>
   );

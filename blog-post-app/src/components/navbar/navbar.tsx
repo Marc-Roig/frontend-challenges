@@ -1,9 +1,10 @@
 import useDarkTheme from "@/hooks/useDarkTheme";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 import React, { useRef } from "react";
-import { Button } from "../atoms/button";
-import { Container } from "../atoms/container";
-import DarkModeToggle from "../atoms/dark-mode-toggle";
+import { Button } from "../ui/button";
+import { Container } from "../ui/container";
+import DarkModeToggle from "./dark-mode-toggle";
 import useIsPinned from "./hooks/isPinned";
 
 function Navbar() {
@@ -22,17 +23,20 @@ function Navbar() {
         }`}
       >
         <DarkModeToggle onChange={() => switchTheme()} colorTheme={theme} />
-        <Button
-          className="h-10"
-          onClick={() =>
-            signIn("credentials", {
-              email: "marc12info@gmail.com",
-              password: "1234",
-            })
-          }
-        >
-          Sign In
-        </Button>
+        <Link href="/auth/sign-in">
+          <Button
+            className="h-10"
+            variant="filled"
+            // onClick={
+            // signIn("credentials", {
+            //   email: "marc12info@gmail.com",
+            //   password: "1234",
+            // })
+            // }
+          >
+            Sign In
+          </Button>
+        </Link>
       </Container>
     </div>
   );

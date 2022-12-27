@@ -12,7 +12,7 @@ function DarkModeToggle({
         type="checkbox"
         className="dn"
         id="dn"
-        defaultChecked={colorTheme === "dark"}
+        checked={colorTheme === "dark"}
         {...props}
       />
       <label htmlFor="dn" className="toggle">

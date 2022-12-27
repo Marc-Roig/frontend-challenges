@@ -1,4 +1,5 @@
 import type { MergeComponentProps } from "@/utils/types";
+import tw from "tailwind-styled-components";
 
 export function Container({
   children,
@@ -8,7 +9,7 @@ export function Container({
   return (
     <div
       {...props}
-      className={`container max-w-4xl bg-opacity-70 px-7 sm:px-14 ${className}`}
+      className={`container max-w-4xl px-7 sm:px-14 ${className}`}
     >
       {children}
     </div>

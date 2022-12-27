@@ -62,10 +62,10 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
-  pages: {
-    signIn: "/auth/signin",
-    signOut: "/auth/signout",
-  },
+  // pages: {
+  //   signIn: "/auth/signin",
+  //   signOut: "/auth/signout",
+  // },
   secret: env.NEXTAUTH_SECRET,
   jwt: {
     secret: env.NEXTAUTH_SECRET,

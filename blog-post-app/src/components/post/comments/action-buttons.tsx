@@ -61,7 +61,7 @@ function ReplyButton({ onClick }: { onClick?: () => void }) {
   return (
     <ActionButton onClick={onClick}>
       <AiOutlineComment size={"1.25rem"} />
-      <p className="hidden md:block">Reply</p>
+      <p className="hidden text-sm md:block">Reply</p>
     </ActionButton>
   );
 }

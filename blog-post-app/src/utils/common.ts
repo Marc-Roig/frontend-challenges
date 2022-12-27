@@ -1,9 +1,12 @@
-export function formatDate(input: string | number): string {
+export function formatDate(input: string | number | Date): string {
   const date = new Date(input);
-  return date.toLocaleDateString("en-US", {
-    month: "long",
+  // Is date from this year?
+  const isThisYear = date.getFullYear() === new Date().getFullYear();
+
+  return date.toLocaleDateString(undefined, {
+    month: "short",
     day: "numeric",
-    year: "numeric",
+    year: isThisYear ? undefined : "numeric",
   });
 }
 

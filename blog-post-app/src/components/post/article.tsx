@@ -1,4 +1,5 @@
 import Image from "next/image";
+import React from "react";
 
 const Article = () => {
   return (
@@ -31,7 +32,7 @@ const Article = () => {
           Space is a vast and fascinating frontier that has captivated the human
           imagination for centuries. From the earliest civilizations, people
           have gazed up at the stars and wondered what lies beyond the
-          boundaries of our world. Today, we have sent probes and spacecraft to
+          boundaries of our world . Today, we have sent probes and spacecraft to
           explore the vast expanse of space, and we have discovered a wealth of
           fascinating facts and mysteries.
         </p>
