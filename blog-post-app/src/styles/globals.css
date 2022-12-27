@@ -49,19 +49,18 @@ html {
   --border-focus: hsl(var(--brand-hue) 10% 50% / 50%);
 }
 
-.surface1 {
-  @apply bg-brand-surface1 text-brand-text2;
+.surface-background {
+  @apply bg-surface-background text-brand-subtleText;
 }
 
-.surface2 {
-  @apply bg-brand-surface2 text-brand-text2;
+.surface-container {
+  @apply bg-surface-container text-brand-subtleText;
 }
 
-.surface3 {
-  @apply bg-brand-surface3 text-brand-text1;
+.surface-content { 
+  @apply bg-surface-content text-brand-text;
 }
 
-.surface4 {
-  @apply bg-brand-surface4 text-brand-text1;
+.surface-highlight {
+  @apply bg-surface-highlight text-brand-text;
 }
-

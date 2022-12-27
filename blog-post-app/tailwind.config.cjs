@@ -24,14 +24,20 @@ module.exports = {
         brand: {
           primary: "var(--brand)",
           primaryLight: "var(--brand-light)",
-          text1: "var(--text1)",
-          text2: "var(--text2)",
+          text: "var(--text1)",
+          subtleText: "var(--text2)",
           surface1: "var(--surface1)",
           surface2: "var(--surface2)",
           surface3: "var(--surface3)",
           surface4: "var(--surface4)",
           border: "var(--border)",
           borderFocus: "var(--border-focus)",
+        },
+        surface: {
+          background: "var(--surface1)",
+          container: "var(--surface2)",
+          content: "var(--surface3)",
+          highlight: "var(--surface4)",
         },
         accent: {
           secondary: "#6246ea",

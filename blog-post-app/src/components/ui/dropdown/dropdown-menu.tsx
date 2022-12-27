@@ -12,7 +12,7 @@ function DropdownMenu({ className }: { className?: string }) {
   return (
     <div ref={ref} className={`relative ${className}`}>
       <button
-        className="inline-flex items-center rounded-lg p-2 text-center text-sm font-medium text-brand-text2 hover:bg-brand-surface4"
+        className="inline-flex items-center rounded-lg p-2 text-center text-sm font-medium text-brand-subtleText hover:bg-surface-highlight"
         onClick={() => setIsOpen(!isOpen)}
       >
         <svg
@@ -26,12 +26,12 @@ function DropdownMenu({ className }: { className?: string }) {
         </svg>
       </button>
       {isOpen && (
-        <div className="absolute z-10 w-44 -translate-x-16 translate-y-1 rounded-lg border border-brand-border bg-brand-surface3 shadow">
+        <div className="absolute z-10 w-44 -translate-x-16 translate-y-1 rounded-lg border border-brand-border bg-surface-content shadow">
           <ul className="">
             <li>
               <a
                 href="#"
-                className="block rounded-lg py-3 px-4 text-brand-text1 hover:bg-brand-surface4"
+                className="block rounded-lg py-3 px-4 text-brand-text hover:bg-surface-highlight"
               >
                 Dashboard
               </a>
@@ -39,7 +39,7 @@ function DropdownMenu({ className }: { className?: string }) {
             <li>
               <a
                 href="#"
-                className="block rounded-lg py-3 px-4 text-brand-text1 hover:bg-brand-surface4"
+                className="block rounded-lg py-3 px-4 text-brand-text hover:bg-surface-highlight"
               >
                 Dashboard
               </a>

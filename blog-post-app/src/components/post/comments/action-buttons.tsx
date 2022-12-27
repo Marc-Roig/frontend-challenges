@@ -13,7 +13,7 @@ function ActionButton({
   return (
     <button
       onClick={onClick}
-      className="flex items-center gap-[0.15rem] text-xs font-light text-brand-text2"
+      className="flex items-center gap-[0.15rem] text-xs font-light text-brand-subtleText"
     >
       {children}
     </button>

@@ -10,7 +10,7 @@ export const ThreadContainer = tw.div<{ depth: number }>`
 
 export const CommentContainer = tw.div`
   border2
-  surface2 
+  surface-container 
   flex 
   w-full 
   flex-grow 
@@ -32,15 +32,15 @@ export const PostInfo = tw.div`
 `;
 
 export const Author = tw.p`
-  text-sm font-normal text-brand-text1
+  text-sm font-normal text-brand-text
 `;
 
 export const PublicationDate = tw.p`
-  text-sm font-normal text-brand-text2
+  text-sm font-normal text-brand-subtleText
 `;
 
 export const Content = tw.p`
-  text-md font-normal text-brand-text1
+  text-md font-normal text-brand-text
 `;
 
 export const Footer = tw.div`

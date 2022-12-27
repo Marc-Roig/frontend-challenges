@@ -51,7 +51,7 @@ function SignIn() {
       <main>
         <Container className="flex h-screen max-w-2xl">
           {/* Center to center of screen */}
-          <div className="shadow-xs my-auto flex w-full flex-col justify-center gap-4 rounded-xl border border-brand-border bg-brand-surface2 p-8">
+          <div className="shadow-xs my-auto flex w-full flex-col justify-center gap-4 rounded-xl border border-brand-border bg-surface-container p-8">
             <div className="flex flex-col gap-2 text-center">
               <h1 className="text-3xl font-semibold tracking-tight">
                 Welcome back
@@ -90,7 +90,7 @@ function SignIn() {
                 <div className="w-full border-t border-brand-border"></div>
               </div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="surface2 px-2">Or continue with</span>
+                <span className="surface-container px-2">Or continue with</span>
               </div>
             </div>
             {/* Github button button */}

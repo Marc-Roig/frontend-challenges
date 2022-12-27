@@ -3,12 +3,12 @@ import { forwardRef } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 
 const input = cva(
-  `text-md rounded-xl text-brand-text1 shadow-sm placeholder:text-brand-text2
-  focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2 focus:ring-offset-brand-surface1 `,
+  `text-md rounded-xl text-brand-text shadow-sm placeholder:text-brand-subtleText
+  focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2 focus:ring-offset-brand-surface-background `,
   {
     variants: {
       variant: {
-        default: "border border-brand-border bg-brand-surface3",
+        default: "border border-brand-border bg-surface-content",
         outline: "",
         filled: "",
         light: "",
@@ -39,9 +39,9 @@ const Input = forwardRef<
       <input
         ref={ref}
         className={`
-        text-md rounded-xl border border-brand-border bg-brand-surface3 px-4 py-2 font-light text-brand-text1 shadow-sm
-        placeholder:text-brand-text2 
-        focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2 focus:ring-offset-brand-surface1
+        text-md focus:ring-offset-brand-surface-background rounded-xl border border-brand-border bg-surface-content px-4 py-2 font-light text-brand-text
+        shadow-sm 
+        placeholder:text-brand-subtleText focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2
         ${props.className}`}
         {...props}
       />
@@ -56,10 +56,10 @@ const Input = forwardRef<
         select:-webkit-autofill,
         select:-webkit-autofill:hover,
         select:-webkit-autofill:focus {
-          border: 1px solid var(--surface3);
+          border: 1px solid var(--surface-content);
           -webkit-text-fill-color: white;
-          -webkit-box-shadow: 0 0 0px 1000px var(--surface3) inset;
-          box-shadow: 0 0 0px 1000px var(--surface3) inset;
+          -webkit-box-shadow: 0 0 0px 1000px var(--surface-content) inset;
+          box-shadow: 0 0 0px 1000px var(--surface-content) inset;
           transition: background-color 5000s ease-in-out 0s;
           color: white;
         }

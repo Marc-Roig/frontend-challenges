@@ -15,7 +15,7 @@ function Navbar() {
   return (
     <div
       ref={navBarRef}
-      className="bg-brand-surface2 dark:bg-gray-900 dark:bg-opacity-30 dark:bg-clip-padding dark:backdrop-blur-md dark:backdrop-filter "
+      className="bg-surface-container dark:bg-gray-900 dark:bg-opacity-30 dark:bg-clip-padding dark:backdrop-blur-md dark:backdrop-filter "
     >
       <Container
         className={`flex h-full w-full items-center justify-end gap-2 py-1 ${

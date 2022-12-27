@@ -16,9 +16,9 @@ export function TextArea({
     <textarea
       value={value}
       className={`
-        surface2 text-md rounded-xl border border-brand-border p-4 font-light shadow-sm 
-        focus:outline-none focus:ring-2 focus:ring-brand-borderFocus 
-        focus:ring-offset-2 focus:ring-offset-brand-surface1
+        surface-container text-md focus:ring-offset-brand-surface-background rounded-xl border border-brand-border p-4 font-light 
+        shadow-sm focus:outline-none focus:ring-2 
+        focus:ring-brand-borderFocus focus:ring-offset-2
         ${className}`}
       {...props}
     >
