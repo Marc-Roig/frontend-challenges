@@ -8,8 +8,6 @@ const like = protectedProcedure
     })
   )
   .mutation(async ({ ctx, input }) => {
-    console.log(input);
-
     // update where the user is not in likedBy
     const alreadyLiked = await ctx.prisma.comment.findUnique({
       where: {

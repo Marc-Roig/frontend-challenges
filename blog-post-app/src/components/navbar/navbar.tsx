@@ -1,7 +1,7 @@
 import { useTheme } from "@/hooks/useTheme";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
-import React, { useRef } from "react";
+import React from "react";
 import { Button } from "../ui/button";
 import { Container } from "../ui/container";
 import DarkModeToggle from "./ThemeToggle";
@@ -9,8 +9,7 @@ import useIsPinned from "./hooks/isPinned";
 
 function Navbar() {
   const { theme, toggleTheme } = useTheme();
-  const navBarRef = useRef<HTMLDivElement>(null);
-  const { isPinned } = useIsPinned(navBarRef);
+  const { isPinned, ref: navBarRef } = useIsPinned<HTMLDivElement>();
 
   return (
     <div

@@ -1,3 +1,4 @@
+import { useHasHydrated } from "@/hooks/useHasHydrated";
 import { useTheme } from "@/hooks/useTheme";
 import React from "react";
 
@@ -9,6 +10,7 @@ const UnderlineText = ({ children }: UnderlineTextProps) => {
   const text = children;
 
   const { theme } = useTheme();
+
   return (
     <>
       {text.split(" ").map((word, index) => (

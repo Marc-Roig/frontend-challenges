@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-export default function useIsPinned(ref: React.RefObject<HTMLElement>) {
+export default function useIsPinned<T extends HTMLElement>() {
   const [isPinned, setIsPinned] = useState(false);
+  const ref = useRef<T>(null);
 
   useEffect(() => {
     function changeColor() {
@@ -17,5 +18,5 @@ export default function useIsPinned(ref: React.RefObject<HTMLElement>) {
     return () => window.removeEventListener("scroll", changeColor);
   }, [ref]);
 
-  return { isPinned };
+  return { isPinned, ref };
 }
