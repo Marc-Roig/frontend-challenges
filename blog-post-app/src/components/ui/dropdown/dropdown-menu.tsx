@@ -1,5 +1,4 @@
 import useClickOutside from "@/hooks/useClickOutside";
-import { AutoAnimate } from "@/utils/animate";
 import React, { useState } from "react";
 import { useRef } from "react";
 

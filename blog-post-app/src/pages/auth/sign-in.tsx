@@ -1,9 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import Input from "@/components/ui/input";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/router";
+import type { NextPage } from "next";
 import React from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
 
 const GithubLogo = () => (
   <svg
@@ -28,80 +30,91 @@ type InputForm = {
   password: string;
 };
 
-function SignIn() {
+/**
+ * Sign in page, with credentials and a github provider.
+ */
+const SignIn: NextPage = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<InputForm>();
+  const [error, setError] = React.useState<string>();
+  const router = useRouter();
 
-  const onSubmit: SubmitHandler<InputForm> = (data) => {
-    console.log(data);
+  // Handler for login with Credentials
+  const onSubmitCredentials: SubmitHandler<InputForm> = (data) => {
+    setError(undefined);
+    // Sign in with credentials
     signIn("credentials", {
       email: data.email,
       password: data.password,
-      callbackUrl: "/",
+      redirect: false,
+    }).then((res) => {
+      if (res?.error) setError("The entered email or password are incorrect.");
+      if (res?.ok) router.push("/");
     });
   };
 
-  console.log(errors);
-
   return (
-    <>
-      <main>
-        <Container className="flex h-screen max-w-2xl">
-          {/* Center to center of screen */}
-          <div className="shadow-xs my-auto flex w-full flex-col justify-center gap-4 rounded-xl border border-brand-border bg-surface-container p-8">
-            <div className="flex flex-col gap-2 text-center">
-              <h1 className="text-3xl font-semibold tracking-tight">
-                Welcome back
-              </h1>
-            </div>
-
-            <form
-              className="flex flex-col gap-4"
-              onSubmit={handleSubmit(onSubmit)}
-            >
-              <Input
-                label="Email"
-                type="email"
-                placeholder="john.doe@gmail.com"
-                {...register("email", {
-                  required: true,
-                  // pattern: /^\S+@\S+.\S+$/,
-                })}
-              />
-              <Input
-                label="Password"
-                type="password"
-                placeholder="Password"
-                {...register("password", {
-                  required: true,
-                  minLength: 4,
-                })}
-              />
-              <Button type="submit" variant="filled" className="mt-4">
-                Sign in to your account
-              </Button>
-            </form>
-
-            <div className="relative my-4">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-brand-border"></div>
-              </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="surface-container px-2">Or continue with</span>
-              </div>
-            </div>
-            {/* Github button button */}
-            <Button variant="default">
-              <GithubLogo /> Log in with Github
-            </Button>
+    <main>
+      <Container className="flex h-screen max-w-2xl">
+        {/* Center to center of screen */}
+        <div className="shadow-xs my-auto flex w-full flex-col justify-center gap-4 rounded-xl border border-brand-border bg-surface-container p-8">
+          <div className="flex flex-col gap-2 text-center">
+            <h1 className="text-3xl font-semibold tracking-tight">
+              Welcome back
+            </h1>
           </div>
-        </Container>
-      </main>
-    </>
+          {/* Credentials form */}
+          <form
+            className="flex flex-col gap-4"
+            onSubmit={handleSubmit(onSubmitCredentials)}
+          >
+            <Input
+              label="Email"
+              placeholder="john.doe@gmail.com"
+              id="email"
+              error={errors.email?.message}
+              {...register("email", {
+                required: "Email is required",
+                pattern: { value: /^\S+@\S+.\S+$/, message: "Invalid email" },
+              })}
+            />
+            <Input
+              label="Password"
+              type="password"
+              placeholder="Password"
+              error={errors.password?.message || error}
+              {...register("password", {
+                required: "Password is required",
+                minLength: 4,
+              })}
+            />
+            <Button type="submit" variant="filled" className="mt-4">
+              Sign in to your account
+            </Button>
+          </form>
+
+          <div className="relative my-4">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-brand-border"></div>
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="surface-container px-2">Or</span>
+            </div>
+          </div>
+          {/* Github button button */}
+          <Button
+            variant="default"
+            onClick={() => signIn("github", { callbackUrl: "/" })}
+          >
+            <GithubLogo /> Log in with Github
+          </Button>
+        </div>
+      </Container>
+    </main>
   );
-}
+};
 
 export default SignIn;

@@ -6,14 +6,14 @@ import { trpc } from "../utils/trpc";
 
 import "../styles/globals.css";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
-import useDarkTheme from "@/hooks/useDarkTheme";
+import { useTheme } from "@/hooks/useTheme";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
-  useDarkTheme();
-  
+  useTheme();
+
   return (
     <SessionProvider session={session}>
       <Component {...pageProps} />

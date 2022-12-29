@@ -1,12 +1,12 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import { Container } from "@/components/ui/container";
-import Navbar from "@/components/navbar/navbar";
-import { Article, Comment, PostNewComment } from "@/components/post";
+import Navbar from "@/components/Navbar/Navbar";
+import { Article, Comment, PostNewComment } from "@/components/Post";
 import { trpc } from "@/utils/trpc";
 import { AutoAnimate } from "@/utils/animate";
 
-const POST_ID = "clc2g8hev0001oxe14hg8b1z5";
+const POST_ID = "clbp1cd7r0001n0cs30298277";
 
 const Home: NextPage = () => {
   const { data: comments } = trpc.comment.getComments.useQuery({

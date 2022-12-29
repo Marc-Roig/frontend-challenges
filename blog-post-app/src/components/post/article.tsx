@@ -1,12 +1,13 @@
 import Image from "next/image";
 import React from "react";
+import UnderlineText from "../ui/text/low-highlight";
 
 const Article = () => {
   return (
     <section id="content" className="contents">
       {/* Title */}
       <h1 className="text-6xl font-semibold tracking-tight">
-        Uncovering the secrets of the universe
+        Uncovering the <UnderlineText>secrets of the universe</UnderlineText>
       </h1>
       <article
         id="post"

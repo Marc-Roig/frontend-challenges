@@ -1,9 +1,9 @@
 import type IComment from "@/types/Comment";
 import { trpc } from "@/utils/trpc";
 import React, { type KeyboardEvent, useState } from "react";
-import { Button } from "../../ui/button";
-import { TextArea } from "../../ui/text-area";
-import useQueryUpdateComments from "./hooks/useQueryUpdateComments";
+import { Button } from "../../../ui/button";
+import { TextArea } from "../../../ui/text-area";
+import useQueryUpdateComments from "../hooks/useQueryUpdateComments";
 
 interface CommentTextAreaProps {
   postId: string;
@@ -87,14 +87,3 @@ export const CommentTextArea = ({
     </div>
   );
 };
-
-const PostNewComment = ({ postId }: { postId: string }) => {
-  return (
-    <section className="flex flex-col gap-4 pt-2">
-      <h2 className="text-2xl font-semibold">Discussion</h2>
-      <CommentTextArea postId={postId} />
-    </section>
-  );
-};
-
-export default PostNewComment;

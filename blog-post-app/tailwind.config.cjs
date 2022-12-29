@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { colors } = require("tailwindcss/colors");
+const colors = require("tailwindcss/colors");
 const { fontFamily } = require("tailwindcss/defaultTheme");
 
 /**
@@ -23,32 +23,26 @@ module.exports = {
       colors: {
         brand: {
           primary: "var(--brand)",
-          primaryLight: "var(--brand-light)",
           text: "var(--text1)",
           subtleText: "var(--text2)",
-          surface1: "var(--surface1)",
-          surface2: "var(--surface2)",
-          surface3: "var(--surface3)",
-          surface4: "var(--surface4)",
           border: "var(--border)",
           borderFocus: "var(--border-focus)",
         },
         surface: {
-          background: "var(--surface1)",
-          container: "var(--surface2)",
-          content: "var(--surface3)",
-          highlight: "var(--surface4)",
+          background: "var(--surface-background)",
+          container: "var(--surface-container)",
+          content: "var(--surface-content)",
+          highlight: "var(--surface-highlight)",
         },
-        accent: {
-          secondary: "#6246ea",
-          secondaryLight: "#7c5dfa",
-          secondaryDark: "#4c3dd9",
-          tertiary: "#e45858",
-          tertiaryLight: "#f66a6a",
-          tertiaryDark: "#c34545",
+        primary: {
+          ...colors.violet,
+          DEFAULT: colors.violet["600"],
+          light: colors.violet["500"],
+          dark: colors.violet["700"],
+          darker: colors.violet["800"],
         },
-        ...colors,
         error: "#E35E54",
+        ...colors.colors,
       },
       keyframes: {
         like: {
@@ -68,7 +62,8 @@ module.exports = {
         bounceSlow: "bounceSlow 4s infinite",
       },
       backgroundImage: {
-        dotted: "radial-gradient(var(--brand) 1px, transparent 1px)",
+        dotted:
+          "radial-gradient(var(--surface-highlight) 1px, transparent 1px)",
       },
     },
   },

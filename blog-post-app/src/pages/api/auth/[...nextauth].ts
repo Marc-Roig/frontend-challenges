@@ -1,5 +1,5 @@
 import NextAuth, { type NextAuthOptions } from "next-auth";
-import DiscordProvider from "next-auth/providers/discord";
+import GithubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 // Prisma adapter for NextAuth, optional and can be removed
@@ -11,7 +11,6 @@ import { prisma } from "../../../server/db/client";
 // Article explaining how to use NextAuth with CredentialsProvider
 // https://dev.to/franciscomendes10866/nextjs-authentication-with-next-auth-trpc-and-prisma-kgl
 export const authOptions: NextAuthOptions = {
-  // Include user.id on session
   callbacks: {
     jwt: async ({ token, user }) => {
       if (user) {
@@ -21,8 +20,8 @@ export const authOptions: NextAuthOptions = {
     },
     session: async ({ session, user, token }) => {
       if (session.user) {
-        session.user.id = (token.id as string) || user.id;
-        session.user.email = token.email;
+        session.user.id = (token?.id as string) || user?.id;
+        session.user.email = token?.email || user?.email;
       }
       return session;
     },
@@ -33,9 +32,9 @@ export const authOptions: NextAuthOptions = {
   // Configure one or more authentication providers
   adapter: PrismaAdapter(prisma),
   providers: [
-    DiscordProvider({
-      clientId: env.DISCORD_CLIENT_ID,
-      clientSecret: env.DISCORD_CLIENT_SECRET,
+    GithubProvider({
+      clientId: env.GITHUB_CLIENT_ID,
+      clientSecret: env.GITHUB_CLIENT_SECRET,
     }),
     CredentialsProvider({
       name: "Credentials",
@@ -44,9 +43,10 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const user = await prisma.user.findUnique({
+        const user = await prisma.user.findFirst({
           where: {
             email: credentials?.email,
+            password: { not: null },
           },
         });
         if (!user) return null;
@@ -62,10 +62,9 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
-  // pages: {
-  //   signIn: "/auth/signin",
-  //   signOut: "/auth/signout",
-  // },
+  pages: {
+    signIn: "/auth/sign-in",
+  },
   secret: env.NEXTAUTH_SECRET,
   jwt: {
     secret: env.NEXTAUTH_SECRET,

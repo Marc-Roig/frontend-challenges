@@ -10,9 +10,9 @@ const button = cva(
       variant: {
         default:
           "bg-surface-container border-2 border-brand-border hover:bg-surface-content",
-        outline: "border-brand-primary border-2 text-brand-primary font-medium",
+        outline: "border-primary border-2 text-primary font-medium",
         filled:
-          "text-white bg-brand-primary hover:bg-brand-primaryLight disabled:hover:bg-brand-primary",
+          "text-white bg-primary hover:bg-primary-light disabled:hover:bg-primary",
         light: "bg-surface-content hover:bg-surface-highlight",
         subtle:
           "disabled:bg-surface-highlight hover:bg-surface-content text-brand-subtleText",

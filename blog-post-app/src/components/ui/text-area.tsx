@@ -2,7 +2,6 @@ import type { MergeComponentProps } from "@/utils/types";
 import React from "react";
 
 interface TextAreaProps {
-  className?: string;
   value?: string;
 }
 
@@ -16,9 +15,8 @@ export function TextArea({
     <textarea
       value={value}
       className={`
-        surface-container text-md focus:ring-offset-brand-surface-background rounded-xl border border-brand-border p-4 font-light 
-        shadow-sm focus:outline-none focus:ring-2 
-        focus:ring-brand-borderFocus focus:ring-offset-2
+        surface-container text-md rounded-xl border border-brand-border p-4 font-light shadow-sm 
+        focus:outline-none focus:ring-2 focus:ring-brand-borderFocus focus:ring-offset-2 focus:ring-offset-surface-background
         ${className}`}
       {...props}
     >

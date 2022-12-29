@@ -1,13 +1,8 @@
 import type IComment from "@/types/Comment";
 import { trpc } from "@/utils/trpc";
 import { useState } from "react";
-import useSessionUser from "../../../navbar/hooks/useSessionUser";
-import {
-  LikeButton,
-  ReplyButton,
-  ShowRepliesButton,
-} from "../action-buttons";
-import { CommentTextArea } from "../post-comment";
+import useSessionUser from "../../../Navbar/hooks/useSessionUser";
+import { LikeButton, ReplyButton, ShowRepliesButton } from "../ActionButtons";
 import { AutoAnimate } from "@/utils/animate";
 import {
   ThreadContainer as ThreadContainerStyle,
@@ -22,6 +17,7 @@ import {
 } from "./styles";
 import { formatDate } from "@/utils/common";
 import DropdownMenu from "@/components/ui/dropdown/dropdown-menu";
+import { CommentTextArea } from "../AddComment.tsx/CommentTextArea";
 
 interface CommentProps {
   comment: IComment;

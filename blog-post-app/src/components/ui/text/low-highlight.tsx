@@ -1,3 +1,4 @@
+import { useTheme } from "@/hooks/useTheme";
 import React from "react";
 
 interface UnderlineTextProps {
@@ -7,6 +8,7 @@ interface UnderlineTextProps {
 const UnderlineText = ({ children }: UnderlineTextProps) => {
   const text = children;
 
+  const { theme } = useTheme();
   return (
     <>
       {text.split(" ").map((word, index) => (
@@ -20,15 +22,16 @@ const UnderlineText = ({ children }: UnderlineTextProps) => {
         }
 
         span.word:after {
-          background-color: #155e75;
+          background-color: ${theme === "dark" ? "#5d21d0" : "#e1bc29"};
           content: "";
           height: 25%;
           position: absolute;
           left: 0;
-          margin-left: -0.5rem;
-          top: 65%;
-          width: calc(100% + 1rem);
+          margin-left: -0.25rem;
+          top: 75%;
+          width: calc(100% + 0.5rem);
           z-index: -1;
+          border-radius: 0.5rem;
         }
       `}</style>
     </>

@@ -1,10 +1,11 @@
 import type { MergeComponentProps } from "@/utils/types";
 import { forwardRef } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/utils/styles";
 
 const input = cva(
   `text-md rounded-xl text-brand-text shadow-sm placeholder:text-brand-subtleText
-  focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2 focus:ring-offset-brand-surface-background `,
+  focus:outline-none focus:ring-1 focus:ring-primary focus:ring-offset-2 focus:ring-offset-surface-background `,
   {
     variants: {
       variant: {
@@ -12,6 +13,11 @@ const input = cva(
         outline: "",
         filled: "",
         light: "",
+      },
+      status: {
+        default: "",
+        error:
+          "border-error text-error placeholder:text-error focus:ring-error",
       },
       size: {
         sm: ["text-sm", "font-light", "py-1", "px-2"],
@@ -22,29 +28,52 @@ const input = cva(
     defaultVariants: {
       variant: "default",
       size: "md",
+      status: "default",
     },
   }
 );
 
-export type InputProps = VariantProps<typeof input>;
+export type InputProps = VariantProps<typeof input> & {
+  label?: string;
+  error?: string;
+};
 
+/**
+ * Input component with variants:
+ *  - variant: default, outline, filled, light
+ *  - size: sm, md
+ *  - status: default, error
+ *
+ */
 // eslint-disable-next-line react/display-name
 const Input = forwardRef<
   HTMLInputElement,
-  MergeComponentProps<"input", { label?: string }>
->(({ label, ...props }, ref) => {
+  MergeComponentProps<"input", InputProps>
+>(({ label, error, variant, size, ...props }, ref) => {
+  // Get the classes for the input
+  const inputClasses = input({
+    variant,
+    size,
+    status: error ? "error" : "default",
+  });
   return (
-    <div className="flex flex-col gap-1">
-      {label && <label htmlFor={label.toLowerCase()}>{label}</label>}
+    <span className="flex flex-col gap-1">
+      {label && (
+        <label
+          className={error ? "text-error" : ""}
+          htmlFor={label.toLowerCase()}
+        >
+          {label}
+        </label>
+      )}
       <input
         ref={ref}
-        className={`
-        text-md focus:ring-offset-brand-surface-background rounded-xl border border-brand-border bg-surface-content px-4 py-2 font-light text-brand-text
-        shadow-sm 
-        placeholder:text-brand-subtleText focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2
-        ${props.className}`}
+        className={cn(inputClasses, props.className)}
+        autoComplete={"current-password"}
+        id={"new-password"}
         {...props}
       />
+      {error && <p className="text-sm text-error">{error}</p>}
       <style jsx>{`
         /* Change Autocomplete styles in Chrome*/
         input:-webkit-autofill,
@@ -64,7 +93,7 @@ const Input = forwardRef<
           color: white;
         }
       `}</style>
-    </div>
+    </span>
   );
 });
 
