@@ -5,6 +5,9 @@ import Navbar from "@/components/Navbar/Navbar";
 import { Article, Comment, PostNewComment } from "@/components/Post";
 import { trpc } from "@/utils/trpc";
 import { AutoAnimate } from "@/utils/animate";
+import { TextArea } from "@/components/ui/text-area";
+import { CommentTextArea } from "@/components/Post/Comments/AddComment.tsx/CommentTextArea";
+import useEditingComment from "@/components/Post/Comments/hooks/useEdittingComment";
 
 const POST_ID = "clbp1cd7r0001n0cs30298277";
 
@@ -13,6 +16,7 @@ const Home: NextPage = () => {
     postId: POST_ID,
   });
 
+  const { isCommentBeingEdited, stopEditingComment } = useEditingComment();
   return (
     <>
       <Head>

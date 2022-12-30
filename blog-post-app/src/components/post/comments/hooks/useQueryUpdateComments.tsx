@@ -76,7 +76,15 @@ const useQueryUpdateComments = (postId: string) => {
     }
   };
 
-  return { addNewComment, deleteComment };
+  const editComment = (comment: IComment) => {
+    const newComments = utils
+      .getCommentThread(comment.replyFrom?.id)
+      .map((c) => (c.id === comment.id ? comment : c));
+
+    utils.updateCommentThread(newComments, comment.replyFrom?.id);
+  };
+
+  return { addNewComment, deleteComment, editComment };
 };
 
 export default useQueryUpdateComments;

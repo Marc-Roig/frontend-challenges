@@ -6,6 +6,7 @@ import DropdownMenu, {
 import React from "react";
 import useQueryUpdateComments from "../hooks/useQueryUpdateComments";
 import { useSession } from "next-auth/react";
+import useEditingComment from "../hooks/useEdittingComment";
 
 function CommentDropdownMenu({ comment }: { comment: IComment }) {
   const { deleteComment } = useQueryUpdateComments(comment.postId);
@@ -17,6 +18,9 @@ function CommentDropdownMenu({ comment }: { comment: IComment }) {
   // get user id using use session
   const { data: session } = useSession();
 
+  // toggle state to edit comment
+  const { editComment } = useEditingComment();
+
   // if user is not the author of the comment, don't show the dropdown menu
   if (session?.user?.id !== comment.author.id) {
     return null;
@@ -26,7 +30,7 @@ function CommentDropdownMenu({ comment }: { comment: IComment }) {
     {
       label: "Edit",
       onClick: () => {
-        console.log("Edit");
+        editComment(comment.id);
       },
     },
     {

@@ -1,30 +1,37 @@
 import type IComment from "@/types/Comment";
 import { trpc } from "@/utils/trpc";
+import type { MergeComponentProps } from "@/utils/types";
 import React, { type KeyboardEvent, useState } from "react";
 import { Button } from "../../../ui/button";
 import { TextArea } from "../../../ui/text-area";
+import useEditingComment from "../hooks/useEdittingComment";
 import useQueryUpdateComments from "../hooks/useQueryUpdateComments";
 
 interface CommentTextAreaProps {
-  postId: string;
-  parentComment?: IComment;
-  discardHandler?: () => void;
-  unfoldDefault?: boolean;
-  placeHolderDefault?: string;
+  postId: string; // Post id to post the comment to
+  comment?: IComment; // Comment to edit
+  parentComment?: IComment; // Parent comment to reply to
+  mode?: "edit" | "add";
+  discardHandler?: () => void; // Handler to discard the comment
+  unfoldDefault?: boolean; // Unfold the comment textarea by default
 }
 
 export const CommentTextArea = ({
   postId,
+  comment,
   parentComment,
+  mode = "add",
   discardHandler,
   unfoldDefault = false,
-  placeHolderDefault = "Add a comment",
-}: CommentTextAreaProps) => {
-  const [commentText, setCommentText] = useState("");
+  placeholder = "Add a comment",
+  value,
+  ...props
+}: MergeComponentProps<"textarea", CommentTextAreaProps>) => {
+  const [commentText, setCommentText] = useState(value?.toString() || "");
   const [isCommentUnfolded, setIsCommentUnfolded] = useState(unfoldDefault);
 
   // Update the comment list with the new comment
-  const { addNewComment } = useQueryUpdateComments(postId);
+  const { addNewComment, editComment } = useQueryUpdateComments(postId);
   // Mutation to post a comment
   const postComment = trpc.comment.create.useMutation({
     onSuccess: (comment) => {
@@ -33,26 +40,53 @@ export const CommentTextArea = ({
     },
   });
 
+  const { stopEditingComment } = useEditingComment();
+
+  // Mutation to edit comment content
+  const editCommentMut = trpc.comment.edit.useMutation({
+    onSuccess: (comment) => {
+      editComment(comment);
+      setCommentText("");
+      stopEditingComment(comment.id);
+    },
+  });
+
   // Handle post by pressing control/cmd + enter
   const handleKeyPress = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
+    if (e.key === "Enter" && (e.ctrlKey || e.metaKey) && commentText) {
       handlePostComment();
     }
   };
 
   // Post a comment
   const handlePostComment = () => {
-    postComment.mutate({
-      postId,
-      parentId: parentComment?.id,
-      content: commentText,
-    });
+    switch (mode) {
+      case "add":
+        postComment.mutate({
+          postId,
+          parentId: parentComment?.id,
+          content: commentText,
+        });
+        break;
+      case "edit":
+        if (!comment) return;
+        editCommentMut.mutate({
+          id: comment.id,
+          content: commentText,
+        });
+        break;
+    }
   };
 
   // Discard the comment
   const handleDiscard = () => {
+    // Call the discard handler if it exists
     if (discardHandler) discardHandler();
+    // Stop editing the comment if it's in edit mode
+    if (mode === "edit") stopEditingComment(comment?.id || "");
+    // Reset the comment text
     setCommentText("");
+    // Fold the comment textarea
     setIsCommentUnfolded(false);
   };
 
@@ -61,13 +95,14 @@ export const CommentTextArea = ({
       <div className="flex w-full grow">
         <TextArea
           className={`grow ${
-            isCommentUnfolded ? "h-36" : "h-16"
+            isCommentUnfolded ? "h-40" : "h-16"
           } resize-none transition-all`}
-          placeholder={placeHolderDefault}
+          placeholder={placeholder}
           onChange={(e) => setCommentText(e.target.value)}
           onSelect={() => setIsCommentUnfolded(true)}
           onKeyDown={handleKeyPress}
           value={commentText}
+          {...props}
         />
       </div>
       {isCommentUnfolded && (
@@ -77,7 +112,7 @@ export const CommentTextArea = ({
             disabled={!commentText.length}
             onClick={handlePostComment}
           >
-            Post
+            {mode === "add" ? "Post" : "Save"}
           </Button>
           <Button variant="subtle" onClick={handleDiscard}>
             Discard

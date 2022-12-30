@@ -18,6 +18,7 @@ import {
 import { formatDate } from "@/utils/common";
 import { CommentTextArea } from "../AddComment.tsx/CommentTextArea";
 import CommentDropdownMenu from "./DropdownMenu";
+import useEditingComment from "../hooks/useEdittingComment";
 
 interface CommentProps {
   comment: IComment;
@@ -42,10 +43,65 @@ function ThreadContainer({
   );
 }
 
-export function Comment({ comment, depth = 0 }: CommentProps) {
+/**
+ *  Used to show an individual comment in a comment thread.
+ */
+function Comment({
+  comment,
+  loadReplies,
+  setLoadReplies,
+  createNewReply,
+  setCreateNewReply,
+}: {
+  comment: IComment;
+  loadReplies: boolean;
+  setLoadReplies: React.Dispatch<React.SetStateAction<boolean>>;
+  createNewReply: boolean;
+  setCreateNewReply: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const { user } = useSessionUser();
+
+  return (
+    <CommentContainer>
+      <Header>
+        <PostInfo>
+          <Author>
+            {comment.author.id === user?.id ? "You" : comment.author.name}
+          </Author>
+          {"•"}
+          <PublicationDate>{formatDate(comment.createdAt)}</PublicationDate>
+        </PostInfo>
+        <CommentDropdownMenu comment={comment} />
+      </Header>
+      <Content>{comment.content}</Content>
+      <Footer>
+        <LikeButton comment={comment} />
+        <ReplyButton
+          onClick={() => {
+            // If replies are not loaded, load them
+            if (!loadReplies && !createNewReply) setLoadReplies(true);
+            // Toggle new reply
+            setCreateNewReply((prev) => !prev);
+          }}
+        />
+        <ShowRepliesButton
+          comment={comment}
+          repliesVisible={loadReplies}
+          onClick={() => {
+            // If new reply is visible, hide it
+            if (loadReplies && createNewReply) setCreateNewReply(false);
+            setLoadReplies((prev) => !prev);
+          }}
+        />
+      </Footer>
+    </CommentContainer>
+  );
+}
+
+export function CommentThread({ comment, depth = 0 }: CommentProps) {
   const [loadReplies, setLoadReplies] = useState(false);
   const [createNewReply, setCreateNewReply] = useState(false);
+  const { isCommentBeingEdited } = useEditingComment();
 
   const { data: replies } = trpc.comment.getComments.useQuery(
     { postId: comment.postId, parentId: comment.id },
@@ -54,39 +110,25 @@ export function Comment({ comment, depth = 0 }: CommentProps) {
 
   return (
     <ThreadContainer depth={depth}>
-      <CommentContainer>
-        <Header>
-          <PostInfo>
-            <Author>
-              {comment.author.id === user?.id ? "You" : comment.author.name}
-            </Author>
-            {"•"}
-            <PublicationDate>{formatDate(comment.createdAt)}</PublicationDate>
-          </PostInfo>
-          <CommentDropdownMenu comment={comment} />
-        </Header>
-        <Content>{comment.content}</Content>
-        <Footer>
-          <LikeButton comment={comment} />
-          <ReplyButton
-            onClick={() => {
-              // If replies are not loaded, load them
-              if (!loadReplies && !createNewReply) setLoadReplies(true);
-              // Toggle new reply
-              setCreateNewReply((prev) => !prev);
-            }}
-          />
-          <ShowRepliesButton
-            comment={comment}
-            repliesVisible={loadReplies}
-            onClick={() => {
-              // If new reply is visible, hide it
-              if (loadReplies && createNewReply) setCreateNewReply(false);
-              setLoadReplies((prev) => !prev);
-            }}
-          />
-        </Footer>
-      </CommentContainer>
+      {isCommentBeingEdited(comment.id) ? (
+        <CommentTextArea
+          key={comment.id}
+          postId={comment.postId}
+          comment={comment}
+          unfoldDefault
+          value={comment.content}
+          mode="edit"
+        />
+      ) : (
+        <Comment
+          comment={comment}
+          loadReplies={loadReplies}
+          setLoadReplies={setLoadReplies}
+          createNewReply={createNewReply}
+          setCreateNewReply={setCreateNewReply}
+        />
+      )}
+
       <AutoAnimate className="w-full">
         {/* New Reply */}
         {createNewReply && (
@@ -96,7 +138,7 @@ export function Comment({ comment, depth = 0 }: CommentProps) {
                 postId={comment.postId}
                 parentComment={comment}
                 unfoldDefault={true}
-                placeHolderDefault="Reply to this comment"
+                placeholder="Reply to this comment"
                 discardHandler={() => setCreateNewReply(false)}
               />
             </div>
@@ -105,11 +147,11 @@ export function Comment({ comment, depth = 0 }: CommentProps) {
         {/* Replies */}
         {loadReplies &&
           replies?.map((reply) => (
-            <Comment key={reply.id} comment={reply} depth={depth + 1} />
+            <CommentThread key={reply.id} comment={reply} depth={depth + 1} />
           ))}
       </AutoAnimate>
     </ThreadContainer>
   );
 }
 
-export default Comment;
+export default CommentThread;

@@ -40,7 +40,7 @@ export const PublicationDate = tw.p`
 `;
 
 export const Content = tw.p`
-  text-md font-normal text-brand-text
+  text-md font-normal text-brand-text whitespace-pre-wrap
 `;
 
 export const Footer = tw.div`
