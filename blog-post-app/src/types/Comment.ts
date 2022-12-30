@@ -8,7 +8,7 @@ interface IComment {
   postId: string;
   likes: number;
   liked: boolean;
-  replyFrom?: { id: string };
+  replyFrom?: { id: string; replyFrom?: { id: string } };
   replies: { id: string }[];
   createdAt: Date;
   updatedAt: Date;

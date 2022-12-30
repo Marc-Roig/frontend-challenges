@@ -6,6 +6,7 @@ const mapCommentFromDB = (
     include: {
       replies: true;
       author: true;
+      parent: true;
       likedBy: { select: { id: true } };
     };
   }>
@@ -19,7 +20,14 @@ const mapCommentFromDB = (
     },
     likes: comment.likes,
     liked: comment.likedBy.length > 0,
-    replyFrom: comment.parentId ? { id: comment.parentId } : undefined,
+    replyFrom: comment.parentId
+      ? {
+          id: comment.parentId,
+          replyFrom: comment.parent?.parentId
+            ? { id: comment.parent?.parentId }
+            : undefined,
+        }
+      : undefined,
     replies: comment.replies || [],
     postId: comment.postId,
     createdAt: comment.createdAt,

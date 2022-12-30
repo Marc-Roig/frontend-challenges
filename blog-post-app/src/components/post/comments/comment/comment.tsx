@@ -16,8 +16,8 @@ import {
   PostInfo,
 } from "./styles";
 import { formatDate } from "@/utils/common";
-import DropdownMenu from "@/components/ui/dropdown/dropdown-menu";
 import { CommentTextArea } from "../AddComment.tsx/CommentTextArea";
+import CommentDropdownMenu from "./DropdownMenu";
 
 interface CommentProps {
   comment: IComment;
@@ -63,7 +63,7 @@ export function Comment({ comment, depth = 0 }: CommentProps) {
             {"•"}
             <PublicationDate>{formatDate(comment.createdAt)}</PublicationDate>
           </PostInfo>
-          <DropdownMenu className="-mr-2" />
+          <CommentDropdownMenu comment={comment} />
         </Header>
         <Content>{comment.content}</Content>
         <Footer>

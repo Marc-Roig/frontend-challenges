@@ -29,6 +29,7 @@ const getComments = publicProcedure
       include: {
         replies: true,
         author: true,
+        parent: true,
         likedBy: {
           where: {
             id: ctx.session?.user?.id,

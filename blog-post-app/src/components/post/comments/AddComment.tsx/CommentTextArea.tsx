@@ -28,7 +28,7 @@ export const CommentTextArea = ({
   // Mutation to post a comment
   const postComment = trpc.comment.create.useMutation({
     onSuccess: (comment) => {
-      addNewComment(comment, parentComment);
+      addNewComment(comment);
       setCommentText("");
     },
   });
