@@ -12,7 +12,6 @@ html {
     background-color: var(--surface-background);
     color: var(--text1);
 
-    /* --primary: theme(colors.primary.600) */
 }
 
 .light {

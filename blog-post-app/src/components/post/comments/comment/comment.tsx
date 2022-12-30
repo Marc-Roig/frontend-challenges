@@ -14,7 +14,7 @@ import {
   Author,
   PublicationDate,
   PostInfo,
-} from "./styles";
+} from "./Comment.styles";
 import { formatDate } from "@/utils/common";
 import { CommentTextArea } from "../AddComment.tsx/CommentTextArea";
 import CommentDropdownMenu from "./DropdownMenu";

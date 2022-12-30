@@ -1,4 +1,3 @@
-import { useHasHydrated } from "@/hooks/useHasHydrated";
 import { useTheme } from "@/hooks/useTheme";
 import React from "react";
 
@@ -29,9 +28,9 @@ const UnderlineText = ({ children }: UnderlineTextProps) => {
           height: 25%;
           position: absolute;
           left: 0;
-          margin-left: -0.25rem;
+          margin-left: -0.3rem;
           top: 75%;
-          width: calc(100% + 0.5rem);
+          width: calc(100% + 0.6rem);
           z-index: -1;
           border-radius: 0.5rem;
         }
