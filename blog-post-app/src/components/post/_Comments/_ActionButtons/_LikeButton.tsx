@@ -2,7 +2,7 @@ import type IComment from "@/types/Comment";
 import { trpc } from "@/utils/trpc";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import useQueryUpdateComments from "../hooks/useQueryUpdateComments";
-import ActionButton from "./ActionButton";
+import ActionButton from "./_ActionButton";
 
 function LikeButton({ comment }: { comment: IComment }) {
   // const { updateCommentLikes } = useQueryUpdateLike(comment);

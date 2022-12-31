@@ -1,11 +1,11 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import { Container } from "@/components/ui/Container";
+import { Container } from "@/components/ui/_Container";
 import Navbar from "@/components/Navbar/Navbar";
 import { Article, Comment, PostNewComment } from "@/components/Post";
 import { AutoAnimate } from "@/utils/animate";
-import { useGetComments } from "@/components/Post/Comments/hooks/useComments";
-import { Button } from "@/components/ui/Button";
+import { useGetComments } from "@/components/Post/_Comments/hooks/useComments";
+import { Button } from "@/components/ui/_Button";
 import { AiOutlineArrowDown } from "react-icons/ai";
 
 const POST_ID = "clcc3dbae0001n0ro69sj8lut";

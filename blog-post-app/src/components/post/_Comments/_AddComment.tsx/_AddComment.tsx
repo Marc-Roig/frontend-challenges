@@ -1,5 +1,5 @@
 import React from "react";
-import { CommentTextArea } from "./CommentTextArea";
+import { CommentTextArea } from "./_CommentTextArea";
 
 const AddNewComment = ({ postId }: { postId: string }) => {
   return (

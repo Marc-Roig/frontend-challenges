@@ -2,12 +2,12 @@ import { useTheme } from "@/hooks/useTheme";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
-import { Button } from "../ui/Button";
-import { Container } from "../ui/Container";
+import DropdownMenu from "@/components/ui/_Dropdown/_AvatarDropdownMenu";
+import { Container } from "@/components/ui/_Container";
+import { Button } from "@/components/ui/_Button";
+import Avatar from "@/components/ui/_Avatar/Avatar";
 import DarkModeToggle from "./ThemeToggle";
 import useIsPinned from "./hooks/isPinned";
-import Avatar from "../ui/Avatar/Avatar";
-import DropdownMenu from "../ui/Dropdown/AvatarDropdownMenu";
 
 function Navbar() {
   const { theme, toggleTheme } = useTheme();
