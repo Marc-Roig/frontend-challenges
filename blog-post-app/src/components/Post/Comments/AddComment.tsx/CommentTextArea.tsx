@@ -1,11 +1,14 @@
 import type IComment from "@/types/Comment";
 import { trpc } from "@/utils/trpc";
 import type { MergeComponentProps } from "@/utils/types";
+import { useSession } from "next-auth/react";
 import React, { type KeyboardEvent, useState } from "react";
 import { Button } from "../../../ui/Button";
 import { TextArea } from "../../../ui/TextArea";
-import useEditingComment from "../hooks/useEdittingComment";
+import useEditingComment from "../hooks/useEditingComment";
 import useQueryUpdateComments from "../hooks/useQueryUpdateComments";
+import { getCommentFromContent } from "./utils";
+import { nanoid } from "nanoid";
 
 interface CommentTextAreaProps {
   postId: string; // Post id to post the comment to
@@ -30,12 +33,27 @@ export const CommentTextArea = ({
   const [commentText, setCommentText] = useState(value?.toString() || "");
   const [isCommentUnfolded, setIsCommentUnfolded] = useState(unfoldDefault);
 
+  // Author of the comment
+  const { data: session } = useSession();
+  const author = {
+    id: session?.user?.id || "",
+    name: session?.user?.name || "",
+  };
+
   // Update the comment list with the new comment
   const { addNewComment, editComment } = useQueryUpdateComments(postId);
   // Mutation to post a comment
   const postComment = trpc.comment.create.useMutation({
-    onSuccess: (comment) => {
-      addNewComment(comment);
+    // Optimistically update the comment list
+    onMutate: (comment) => {
+      const newComment: IComment = getCommentFromContent({
+        ...comment,
+        parentComment,
+        author,
+      });
+
+      // Optimistically update the comment list
+      addNewComment(newComment);
       setCommentText("");
     },
   });
@@ -44,8 +62,15 @@ export const CommentTextArea = ({
 
   // Mutation to edit comment content
   const editCommentMut = trpc.comment.edit.useMutation({
-    onSuccess: (comment) => {
-      editComment(comment);
+    onMutate: (comment) => {
+      const newComment: IComment = getCommentFromContent({
+        ...comment,
+        postId,
+        parentComment,
+        author,
+      });
+
+      editComment(comment.id, newComment);
       setCommentText("");
       stopEditingComment(comment.id);
     },
@@ -63,6 +88,7 @@ export const CommentTextArea = ({
     switch (mode) {
       case "add":
         postComment.mutate({
+          id: nanoid(),
           postId,
           parentId: parentComment?.id,
           content: commentText,

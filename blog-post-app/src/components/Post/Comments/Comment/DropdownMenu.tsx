@@ -6,7 +6,7 @@ import DropdownMenu, {
 import React from "react";
 import useQueryUpdateComments from "../hooks/useQueryUpdateComments";
 import { useSession } from "next-auth/react";
-import useEditingComment from "../hooks/useEdittingComment";
+import useEditingComment from "../hooks/useEditingComment";
 
 function CommentDropdownMenu({ comment }: { comment: IComment }) {
   const { deleteComment } = useQueryUpdateComments(comment.postId);

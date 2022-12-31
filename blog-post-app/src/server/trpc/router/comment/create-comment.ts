@@ -5,6 +5,7 @@ import mapCommentFromDB from "./utils/map-from-db";
 const createComment = protectedProcedure
   .input(
     z.object({
+      id: z.string(),
       postId: z.string(),
       parentId: z.string().optional(),
       content: z.string(),
@@ -13,6 +14,7 @@ const createComment = protectedProcedure
   .mutation(async ({ ctx, input }) => {
     const comment = await ctx.prisma.comment.create({
       data: {
+        id: input.id,
         content: input.content,
         authorId: ctx.session.user.id,
         postId: input.postId,

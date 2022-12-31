@@ -17,7 +17,7 @@ import {
 import { formatDate } from "@/utils/common";
 import { CommentTextArea } from "../AddComment.tsx/CommentTextArea";
 import CommentDropdownMenu from "./DropdownMenu";
-import useEditingComment from "../hooks/useEdittingComment";
+import useEditingComment from "../hooks/useEditingComment";
 import { useGetComments } from "../hooks/useComments";
 import Avatar from "@/components/ui/Avatar/Avatar";
 

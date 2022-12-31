@@ -115,11 +115,11 @@ const useQueryUpdateComments = (postId: string) => {
     }
   };
 
-  const editComment = (comment: IComment) => {
+  const editComment = (commentId: string, newComment: IComment) => {
     utils.updateCommentThread((c) => {
-      if (c.id !== comment.id) return c;
-      return comment;
-    }, comment.replyFrom?.id);
+      if (c.id !== commentId) return c;
+      return newComment;
+    }, newComment.replyFrom?.id);
   };
 
   const updateCommentLikes = (comment: IComment, liked: boolean) => {
