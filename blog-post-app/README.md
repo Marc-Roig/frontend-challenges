@@ -4,13 +4,9 @@
 
 ### Users
 
-- Add avatar
 
 ### Comments
 
-- Add user avatar
-- Multine comments
-- Infinite scroll
 - Sort by
   - Date created
   - Likes

@@ -7,6 +7,7 @@ import { Container } from "@ui/Container";
 import DarkModeToggle from "./ThemeToggle";
 import useIsPinned from "./hooks/isPinned";
 import Avatar from "../ui/Avatar/Avatar";
+import DropdownMenu from "../ui/Dropdown/AvatarDropdownMenu";
 
 function Navbar() {
   const { theme, toggleTheme } = useTheme();
@@ -26,16 +27,15 @@ function Navbar() {
         }`}
       >
         <DarkModeToggle onClick={() => toggleTheme()} colorTheme={theme} />
+
         {isLogged ? (
           <>
-            <Avatar status="online" size="md" />
-            <Button
-              className="my-2 h-10"
-              variant="filled"
-              onClick={() => signOut()}
+            <DropdownMenu
+              className="my-0.5"
+              items={[{ label: "Log out", onClick: signOut, color: "red" }]}
             >
-              Sign Out
-            </Button>
+              <Avatar status="online" size="md" />
+            </DropdownMenu>
           </>
         ) : (
           <Link href="/auth/sign-in">

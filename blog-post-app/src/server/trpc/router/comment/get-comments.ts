@@ -17,8 +17,7 @@ const getComments = publicProcedure
         postId: input.postId,
         parentId: input.parentId || null,
       },
-      take: input.limit,
-      skip: input.cursor ? input.limit : 0,
+      take: input.limit + 1,
       cursor: input.cursor
         ? {
             id: input.cursor,
@@ -42,9 +41,8 @@ const getComments = publicProcedure
       },
     });
 
-    let nextCursor = null;
-    if (comments.length === input.limit)
-      nextCursor = comments.slice(0, -1)?.at(0)?.id;
+    const nextCursor =
+      comments.length >= input.limit + 1 ? comments.pop()?.id : null;
 
     return {
       comments: comments?.map(mapCommentFromDB),

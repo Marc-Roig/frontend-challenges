@@ -67,7 +67,7 @@ model VerificationToken {
 model Post {
   id      String @id @default(cuid())
   title   String
-  content String
+  content String // @db.Text
 
   author   User   @relation(fields: [authorId], references: [id])
   authorId String
@@ -79,7 +79,7 @@ model Post {
 
 model Comment {
   id        String    @id @default(cuid())
-  content   String
+  content   String // @db.Text
   author    User      @relation("author", fields: [authorId], references: [id])
   authorId  String
   post      Post      @relation(fields: [postId], references: [id], onDelete: Cascade)

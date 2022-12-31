@@ -9,16 +9,15 @@ export const Container = tw.div`
 `;
 
 export const MenuOpenButton = tw.button`
-  inline-flex items-center 
-  rounded-lg p-2 
-  text-brand-subtleText text-center text-sm font-medium 
+  rounded-lg p-2
+   text-brand-subtleText 
   hover:bg-surface-highlight
 `;
 
 export const Menu = tw.div`
   absolute z-10 w-44 -translate-x-16 translate-y-1 
   rounded-lg border border-brand-border 
-  bg-surface-content 
+  bg-surface-container
   shadow
 `;
 
