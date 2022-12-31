@@ -1,5 +1,4 @@
 import type { MergeComponentProps } from "@/utils/types";
-import tw from "tailwind-styled-components";
 
 export function Container({
   children,
