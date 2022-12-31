@@ -8,7 +8,7 @@ import { useGetComments } from "@/components/Post/Comments/hooks/useComments";
 import { Button } from "@/components/ui/Button";
 import { AiOutlineArrowDown } from "react-icons/ai";
 
-const POST_ID = "clbp1cd7r0001n0cs30298277";
+const POST_ID = "clcc3dbae0001n0ro69sj8lut";
 
 const Home: NextPage = () => {
   const { comments, fetchNextPage, hasNextPage } = useGetComments(POST_ID);

@@ -3,10 +3,10 @@ const prisma = new PrismaClient();
 
 async function main() {
   await prisma.user.upsert({
-    where: { email: "marc12info@gmail.com" },
+    where: { email: "marc13info@gmail.com" },
     update: {},
     create: {
-      email: "marc12info@gmail.com",
+      email: "marc13info@gmail.com",
       name: "Marc",
       posts: {
         create: { title: "Hello World", content: "This is my first post" },
