@@ -3,20 +3,16 @@ import Head from "next/head";
 import { Container } from "@/components/ui/container";
 import Navbar from "@/components/Navbar/Navbar";
 import { Article, Comment, PostNewComment } from "@/components/Post";
-import { trpc } from "@/utils/trpc";
 import { AutoAnimate } from "@/utils/animate";
-import { TextArea } from "@/components/ui/text-area";
-import { CommentTextArea } from "@/components/Post/Comments/AddComment.tsx/CommentTextArea";
-import useEditingComment from "@/components/Post/Comments/hooks/useEdittingComment";
+import { useGetComments } from "@/components/Post/Comments/hooks/useComments";
+import { Button } from "@/components/ui/button";
+import { AiOutlineArrowDown } from "react-icons/ai";
 
 const POST_ID = "clbp1cd7r0001n0cs30298277";
 
 const Home: NextPage = () => {
-  const { data: comments } = trpc.comment.getComments.useQuery({
-    postId: POST_ID,
-  });
+  const { comments, fetchNextPage, hasNextPage } = useGetComments(POST_ID);
 
-  const { isCommentBeingEdited, stopEditingComment } = useEditingComment();
   return (
     <>
       <Head>
@@ -28,15 +24,21 @@ const Home: NextPage = () => {
         <Navbar />
       </header>
       <main className={`mt-8 min-w-full transition-colors duration-500`}>
-        <Container className="flex flex-col gap-6">
+        <Container className="mb-8 flex flex-col gap-6">
           <Article />
           <PostNewComment postId={POST_ID} />
           {/* Comment List */}
-          <AutoAnimate className="mt-8 mb-8 flex w-full flex-col gap-6">
+          <AutoAnimate className="mt-8 flex w-full flex-col gap-6">
             {comments?.map((comment) => (
               <Comment key={comment.id} comment={comment} />
             ))}
           </AutoAnimate>
+          {/* Load more comments */}
+          {hasNextPage && (
+            <Button variant="subtle" onClick={() => fetchNextPage()}>
+              Load more <AiOutlineArrowDown className="ml-2" />
+            </Button>
+          )}
         </Container>
       </main>
     </>

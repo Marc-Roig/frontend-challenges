@@ -1,5 +1,4 @@
 import type IComment from "@/types/Comment";
-import { trpc } from "@/utils/trpc";
 import { useState } from "react";
 import useSessionUser from "../../../Navbar/hooks/useSessionUser";
 import { LikeButton, ReplyButton, ShowRepliesButton } from "../ActionButtons";
@@ -19,6 +18,7 @@ import { formatDate } from "@/utils/common";
 import { CommentTextArea } from "../AddComment.tsx/CommentTextArea";
 import CommentDropdownMenu from "./DropdownMenu";
 import useEditingComment from "../hooks/useEdittingComment";
+import { useGetComments } from "../hooks/useComments";
 
 interface CommentProps {
   comment: IComment;
@@ -103,10 +103,9 @@ export function CommentThread({ comment, depth = 0 }: CommentProps) {
   const [createNewReply, setCreateNewReply] = useState(false);
   const { isCommentBeingEdited } = useEditingComment();
 
-  const { data: replies } = trpc.comment.getComments.useQuery(
-    { postId: comment.postId, parentId: comment.id },
-    { enabled: loadReplies }
-  );
+  const { comments: replies } = useGetComments(comment.postId, comment.id, {
+    enabled: loadReplies,
+  });
 
   return (
     <ThreadContainer depth={depth}>

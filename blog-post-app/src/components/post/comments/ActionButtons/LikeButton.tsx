@@ -1,17 +1,18 @@
 import type IComment from "@/types/Comment";
 import { trpc } from "@/utils/trpc";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import useQueryUpdateLike from "../hooks/useQueryUpdateLike";
+import useQueryUpdateComments from "../hooks/useQueryUpdateComments";
 import ActionButton from "./ActionButton";
 
 function LikeButton({ comment }: { comment: IComment }) {
-  const { updateCommentLikes } = useQueryUpdateLike(comment);
+  // const { updateCommentLikes } = useQueryUpdateLike(comment);
+  const { updateCommentLikes } = useQueryUpdateComments(comment.postId);
 
   const like = trpc.comment.like.useMutation({
-    onSuccess: () => updateCommentLikes(true),
+    onSuccess: () => updateCommentLikes(comment, true),
   });
   const unlike = trpc.comment.unlike.useMutation({
-    onSuccess: () => updateCommentLikes(false),
+    onSuccess: () => updateCommentLikes(comment, false),
   });
 
   const handleLike = () => {

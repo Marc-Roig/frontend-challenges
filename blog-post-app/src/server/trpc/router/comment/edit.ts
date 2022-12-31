@@ -10,6 +10,21 @@ const editComment = protectedProcedure
     })
   )
   .mutation(async ({ ctx, input }) => {
+    // check if user is allowed to edit comment
+    const originalComment = await ctx.prisma.comment.findUnique({
+      where: {
+        id: input.id,
+      },
+      select: {
+        authorId: true,
+      },
+    });
+
+    if (!originalComment) throw new Error("Comment not found");
+    if (originalComment.authorId !== ctx.session.user.id)
+      throw new Error("Not allowed to edit comment");
+
+    // update comment
     const comment = await ctx.prisma.comment.update({
       where: {
         id: input.id,

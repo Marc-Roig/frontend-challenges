@@ -8,6 +8,7 @@ const getComments = publicProcedure
       postId: z.string(),
       parentId: z.string().optional(),
       cursor: z.string().optional(),
+      limit: z.number().optional().default(4),
     })
   )
   .query(async ({ ctx, input }) => {
@@ -16,8 +17,8 @@ const getComments = publicProcedure
         postId: input.postId,
         parentId: input.parentId || null,
       },
-      take: 10,
-      skip: input.cursor ? 1 : 0,
+      take: input.limit,
+      skip: input.cursor ? input.limit : 0,
       cursor: input.cursor
         ? {
             id: input.cursor,
@@ -41,7 +42,14 @@ const getComments = publicProcedure
       },
     });
 
-    return comments?.map(mapCommentFromDB);
+    let nextCursor = null;
+    if (comments.length === input.limit)
+      nextCursor = comments.slice(0, -1)?.at(0)?.id;
+
+    return {
+      comments: comments?.map(mapCommentFromDB),
+      nextCursor,
+    };
   });
 
 export default getComments;
