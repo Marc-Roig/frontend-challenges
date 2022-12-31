@@ -1,6 +1,6 @@
 import type IComment from "@/types/Comment";
 import { useState } from "react";
-import useSessionUser from "../../../Navbar/hooks/useSessionUser";
+import useSessionUser from "../../../_Navbar/hooks/useSessionUser";
 import { LikeButton, ReplyButton, ShowRepliesButton } from "../ActionButtons";
 import { AutoAnimate } from "@/utils/animate";
 import {
