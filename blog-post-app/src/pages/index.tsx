@@ -1,10 +1,10 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import { Container } from "@/components/ui/Container";
-import Navbar from "@/components/_Navbar/Navbar";
-import { Article, Comment, PostNewComment } from "@/components/_Post";
+import Navbar from "@/components/Navbar/Navbar";
+import { Article, Comment, PostNewComment } from "@/components/Post";
 import { AutoAnimate } from "@/utils/animate";
-import { useGetComments } from "@/components/_Post/Comments/hooks/useComments";
+import { useGetComments } from "@/components/Post/Comments/hooks/useComments";
 import { Button } from "@/components/ui/Button";
 import { AiOutlineArrowDown } from "react-icons/ai";
 
