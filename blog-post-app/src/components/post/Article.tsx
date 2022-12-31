@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import UnderlineText from "../ui/TextDecoration/_UnderlineText";
+import UnderlineText from "../ui/TextDecoration/UnderlineText";
 
 const Article = () => {
   return (

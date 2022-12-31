@@ -1,7 +1,7 @@
 import type IComment from "@/types/Comment";
 import { useState } from "react";
 import useSessionUser from "../../../Navbar/hooks/useSessionUser";
-import { LikeButton, ReplyButton, ShowRepliesButton } from "../_ActionButtons";
+import { LikeButton, ReplyButton, ShowRepliesButton } from "../ActionButtons";
 import { AutoAnimate } from "@/utils/animate";
 import {
   ThreadContainer as ThreadContainerStyle,
@@ -13,13 +13,13 @@ import {
   Author,
   PublicationDate,
   PostInfo,
-} from "./_Comment.styles";
+} from "./Comment.styles";
 import { formatDate } from "@/utils/common";
-import { CommentTextArea } from "../_AddComment.tsx/_CommentTextArea";
-import CommentDropdownMenu from "./_DropdownMenu";
+import { CommentTextArea } from "../AddComment.tsx/CommentTextArea";
+import CommentDropdownMenu from "./DropdownMenu";
 import useEditingComment from "../hooks/useEdittingComment";
 import { useGetComments } from "../hooks/useComments";
-import Avatar from "@/components/ui/_Avatar/Avatar";
+import Avatar from "@/components/ui/Avatar/Avatar";
 
 interface CommentProps {
   comment: IComment;

@@ -6,8 +6,8 @@ import {
   Menu,
   MenuAnchor,
   MenuOpenButton,
-} from "./_DropdownMenu.styles";
-import type { MergeComponentProps } from "@/utils/types";
+} from "./DropdownMenu.styles";
+import { HiDotsHorizontal } from "react-icons/hi";
 
 export interface Items {
   label: string;
@@ -16,14 +16,11 @@ export interface Items {
 }
 
 export interface DropdownMenuProps {
+  className?: string;
   items: Items[];
 }
 
-function DropdownMenu({
-  children,
-  className,
-  items,
-}: MergeComponentProps<"div", DropdownMenuProps>) {
+function DropdownMenu({ className, items }: DropdownMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef(null);
 
@@ -31,8 +28,8 @@ function DropdownMenu({
 
   return (
     <Container ref={ref} className={`${className}`}>
-      <MenuOpenButton className="p-1 " onClick={() => setIsOpen(!isOpen)}>
-        {children}
+      <MenuOpenButton onClick={() => setIsOpen(!isOpen)}>
+        <HiDotsHorizontal size={"1.5rem"} />
       </MenuOpenButton>
       {isOpen && (
         <Menu>

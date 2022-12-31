@@ -1,6 +1,6 @@
 import type IComment from "@/types/Comment";
 import { AiOutlineComment } from "react-icons/ai";
-import ActionButton from "./_ActionButton";
+import ActionButton from "./ActionButton";
 
 function ReplyButton({ onClick }: { onClick?: () => void }) {
   return (

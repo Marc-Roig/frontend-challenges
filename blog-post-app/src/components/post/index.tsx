@@ -1,5 +1,5 @@
-import Article from "./_Article";
-import PostNewComment from "./_Comments/_AddComment.tsx/_AddComment";
-import Comment from "./_Comments/_Comment/_Comment";
+import Article from "./Article";
+import PostNewComment from "./Comments/AddComment.tsx/AddComment";
+import Comment from "./Comments/Comment/Comment";
 
 export { Article, PostNewComment, Comment };

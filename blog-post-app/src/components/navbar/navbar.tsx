@@ -2,10 +2,10 @@ import { useTheme } from "@/hooks/useTheme";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
-import DropdownMenu from "@/components/ui/_Dropdown/_AvatarDropdownMenu";
-import { Container } from "@/components/ui/_Container";
-import { Button } from "@/components/ui/_Button";
-import Avatar from "@/components/ui/_Avatar/Avatar";
+import DropdownMenu from "@/components/ui/Dropdown/AvatarDropdownMenu";
+import { Container } from "@/components/ui/Container";
+import { Button } from "@/components/ui/Button";
+import Avatar from "@/components/ui/Avatar/Avatar";
 import DarkModeToggle from "./ThemeToggle";
 import useIsPinned from "./hooks/isPinned";
 
