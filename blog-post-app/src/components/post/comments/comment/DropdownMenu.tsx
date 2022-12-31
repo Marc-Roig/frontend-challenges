@@ -2,7 +2,7 @@ import type IComment from "@/types/Comment";
 import { trpc } from "@/utils/trpc";
 import DropdownMenu, {
   type Items,
-} from "@/components/ui/dropdown/DropdownMenu";
+} from "@/components/ui/Dropdown/DropdownMenu";
 import React from "react";
 import useQueryUpdateComments from "../hooks/useQueryUpdateComments";
 import { useSession } from "next-auth/react";

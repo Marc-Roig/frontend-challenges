@@ -2,8 +2,8 @@ import type IComment from "@/types/Comment";
 import { trpc } from "@/utils/trpc";
 import type { MergeComponentProps } from "@/utils/types";
 import React, { type KeyboardEvent, useState } from "react";
-import { Button } from "../../../ui/button";
-import { TextArea } from "../../../ui/text-area";
+import { Button } from "../../../ui/Button";
+import { TextArea } from "../../../ui/TextArea";
 import useEditingComment from "../hooks/useEdittingComment";
 import useQueryUpdateComments from "../hooks/useQueryUpdateComments";
 

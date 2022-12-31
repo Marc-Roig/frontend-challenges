@@ -19,6 +19,7 @@ import { CommentTextArea } from "../AddComment.tsx/CommentTextArea";
 import CommentDropdownMenu from "./DropdownMenu";
 import useEditingComment from "../hooks/useEdittingComment";
 import { useGetComments } from "../hooks/useComments";
+import Avatar from "@/components/ui/Avatar/Avatar";
 
 interface CommentProps {
   comment: IComment;
@@ -65,6 +66,7 @@ function Comment({
     <CommentContainer>
       <Header>
         <PostInfo>
+          <Avatar size={"sm"} className="mr-1" />
           <Author>
             {comment.author.id === user?.id ? "You" : comment.author.name}
           </Author>

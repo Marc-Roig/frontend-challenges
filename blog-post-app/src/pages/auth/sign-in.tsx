@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button";
-import { Container } from "@/components/ui/container";
-import Input from "@/components/ui/input";
+import { Button } from "@/components/ui/Button";
+import { Container } from "@/components/ui/Container";
+import Input from "@/components/ui/Input";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";

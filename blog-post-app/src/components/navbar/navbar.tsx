@@ -1,15 +1,19 @@
 import { useTheme } from "@/hooks/useTheme";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
-import { Button } from "../ui/button";
-import { Container } from "../ui/container";
+import { Button } from "@ui/Button";
+import { Container } from "@ui/Container";
 import DarkModeToggle from "./ThemeToggle";
 import useIsPinned from "./hooks/isPinned";
+import Avatar from "../ui/Avatar/Avatar";
 
 function Navbar() {
   const { theme, toggleTheme } = useTheme();
   const { isPinned, ref: navBarRef } = useIsPinned<HTMLDivElement>();
+
+  const { status } = useSession();
+  const isLogged = status === "authenticated";
 
   return (
     <div
@@ -22,14 +26,24 @@ function Navbar() {
         }`}
       >
         <DarkModeToggle onClick={() => toggleTheme()} colorTheme={theme} />
-        <Link href="/auth/sign-in">
-          <Button className="my-2 h-10" variant="filled">
-            Sign In
-          </Button>
-        </Link>
-        <Button className="h-10" variant="filled" onClick={() => signOut()}>
-          Sign Out
-        </Button>
+        {isLogged ? (
+          <>
+            <Avatar status="online" size="md" />
+            <Button
+              className="my-2 h-10"
+              variant="filled"
+              onClick={() => signOut()}
+            >
+              Sign Out
+            </Button>
+          </>
+        ) : (
+          <Link href="/auth/sign-in">
+            <Button className="my-2 h-10" variant="filled">
+              Sign In
+            </Button>
+          </Link>
+        )}
       </Container>
     </div>
   );
