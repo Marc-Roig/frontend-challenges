@@ -32,7 +32,7 @@ const getComments = publicProcedure
         parent: true,
         likedBy: {
           where: {
-            id: ctx.session?.user?.id,
+            id: ctx.session?.user?.id || "",
           },
           select: {
             id: true,

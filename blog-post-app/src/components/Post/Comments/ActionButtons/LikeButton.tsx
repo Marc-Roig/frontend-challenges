@@ -28,8 +28,11 @@ function LikeButton({ comment }: { comment: IComment }) {
       ) : (
         <AiOutlineHeart size={"1.25rem"} />
       )}
-      <p className="hidden text-sm md:block">
-        {`${comment.likes} like${comment.likes !== 1 ? "s" : ""}`}
+      <p className="text-sm ">
+        <span className="hidden md:block">
+          {`${comment.likes} like${comment.likes !== 1 ? "s" : ""}`}
+        </span>
+        <span className="md:hidden">{comment.likes}</span>
       </p>
     </ActionButton>
   );
