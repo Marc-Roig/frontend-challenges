@@ -13,24 +13,26 @@ const UnderlineText = ({ children }: UnderlineTextProps) => {
   return (
     <>
       {text.split(" ").map((word, index) => (
-        <span key={index} className="word">
-          {word + " "}
-        </span>
+        <>
+          <span key={index} className="inline-block">
+            {word}
+          </span>{" "}
+        </>
       ))}
       <style jsx>{`
-        span.word {
+        span {
           position: relative;
         }
 
-        span.word:after {
+        span:after {
           background-color: ${theme === "dark" ? "#5d21d0" : "#e1bc29"};
           content: "";
           height: 25%;
           position: absolute;
           left: 0;
-          margin-left: -0.3rem;
-          top: 75%;
-          width: calc(100% + 0.6rem);
+          margin-left: -0.6rem;
+          top: 80%;
+          width: calc(100% + 1.2rem);
           z-index: -1;
           border-radius: 0.5rem;
         }
