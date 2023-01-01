@@ -1,14 +1,12 @@
 import type IComment from "@/types/Comment";
-import { trpc } from "@/utils/trpc";
 import type { MergeComponentProps } from "@/utils/types";
-import { useSession } from "next-auth/react";
 import React, { type KeyboardEvent, useState } from "react";
 import { Button } from "../../../ui/Button";
 import { TextArea } from "../../../ui/TextArea";
 import useEditingComment from "../hooks/useEditingComment";
-import useQueryUpdateComments from "../hooks/useQueryUpdateComments";
-import { getCommentFromContent } from "./utils";
 import { nanoid } from "nanoid";
+import { useAddComment, useEditComment } from "../hooks/useComments";
+import useProtectedAction from "@/hooks/useProtectedAction";
 
 interface CommentTextAreaProps {
   postId: string; // Post id to post the comment to
@@ -32,47 +30,24 @@ export const CommentTextArea = ({
 }: MergeComponentProps<"textarea", CommentTextAreaProps>) => {
   const [commentText, setCommentText] = useState(value?.toString() || "");
   const [isCommentUnfolded, setIsCommentUnfolded] = useState(unfoldDefault);
-
-  // Author of the comment
-  const { data: session } = useSession();
-  const author = {
-    id: session?.user?.id || "",
-    name: session?.user?.name || "",
-  };
-
-  // Update the comment list with the new comment
-  const { addNewComment, editComment } = useQueryUpdateComments(postId);
-  // Mutation to post a comment
-  const postComment = trpc.comment.create.useMutation({
-    // Optimistically update the comment list
-    onMutate: (comment) => {
-      const newComment: IComment = getCommentFromContent({
-        ...comment,
-        parentComment,
-        author,
-      });
-
-      // Optimistically update the comment list
-      addNewComment(newComment);
-      setCommentText("");
-    },
-  });
-
+  const { protectAction } = useProtectedAction();
   const { stopEditingComment } = useEditingComment();
 
-  // Mutation to edit comment content
-  const editCommentMut = trpc.comment.edit.useMutation({
-    onMutate: (comment) => {
-      const newComment: IComment = getCommentFromContent({
-        ...comment,
-        postId,
-        parentComment,
-        author,
-      });
+  // Mutation to post a comment
+  const postComment = useAddComment({
+    postId,
+    parentComment,
+    onMutate: () => setCommentText(""),
+  });
 
-      editComment(comment.id, newComment);
+  // Mutation to edit comment content
+  const editCommentMut = useEditComment({
+    postId,
+    parentComment,
+    onMutate: (comment) => {
       setCommentText("");
-      stopEditingComment(comment.id);
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-non-null-asserted-optional-chain
+      stopEditingComment(comment.id!);
     },
   });
 
@@ -125,7 +100,7 @@ export const CommentTextArea = ({
           } resize-none transition-all`}
           placeholder={placeholder}
           onChange={(e) => setCommentText(e.target.value)}
-          onSelect={() => setIsCommentUnfolded(true)}
+          onSelect={protectAction(() => setIsCommentUnfolded(true))}
           onKeyDown={handleKeyPress}
           value={commentText}
           {...props}
@@ -136,7 +111,7 @@ export const CommentTextArea = ({
           <Button
             variant="filled"
             disabled={!commentText.length}
-            onClick={handlePostComment}
+            onClick={protectAction(handlePostComment)}
           >
             {mode === "add" ? "Post" : "Save"}
           </Button>

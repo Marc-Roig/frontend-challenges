@@ -1,10 +1,13 @@
+import useProtectedAction from "@/hooks/useProtectedAction";
 import type IComment from "@/types/Comment";
 import { AiOutlineComment } from "react-icons/ai";
 import ActionButton from "./ActionButton";
 
 function ReplyButton({ onClick }: { onClick?: () => void }) {
+  const { protectAction } = useProtectedAction();
+
   return (
-    <ActionButton onClick={onClick}>
+    <ActionButton onClick={protectAction(onClick)}>
       <AiOutlineComment size={"1.25rem"} />
       <p className="hidden text-sm md:block">Reply</p>
     </ActionButton>
@@ -29,8 +32,10 @@ function ShowRepliesButton({
   onClick?: () => void;
 }) {
   const repliesText = getRepliesText(comment, repliesVisible);
+  const { protectAction } = useProtectedAction();
+
   return (
-    <button className="text-sm font-light" onClick={onClick}>
+    <button className="text-sm font-light" onClick={protectAction(onClick)}>
       {repliesText}
     </button>
   );

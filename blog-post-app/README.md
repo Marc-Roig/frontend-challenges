@@ -11,6 +11,7 @@
   - Date created
   - Likes
   - Replies
+- Invert order of replies
 - Add user mentions
 - Add mentions https://cdn.dribbble.com/users/744746/screenshots/16819772/media/c6f2ab5ebe6a85f72771d3f8fe9596cf.png?compress=1&resize=1200x900&vertical=top
 
