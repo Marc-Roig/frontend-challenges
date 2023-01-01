@@ -30,9 +30,9 @@ const UnderlineText = ({ children }: UnderlineTextProps) => {
           height: 25%;
           position: absolute;
           left: 0;
-          margin-left: -0.6rem;
+          margin-left: -0.65rem;
           top: 80%;
-          width: calc(100% + 1.2rem);
+          width: calc(100% + 1.3rem);
           z-index: -1;
           border-radius: 0.5rem;
         }

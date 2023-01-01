@@ -33,7 +33,7 @@ function ThreadContainer({
   children: React.ReactNode;
   depth?: number;
 }) {
-  const marginClass = depth ? "mt-6" : "";
+  const marginClass = depth ? "pt-6" : "";
 
   return (
     <ThreadBorder depth={depth}>
@@ -105,9 +105,10 @@ export function CommentThread({ comment, depth = 0 }: CommentProps) {
   const [createNewReply, setCreateNewReply] = useState(false);
   const { isCommentBeingEdited } = useEditingComment();
 
-  const { comments: replies } = useGetComments(comment.postId, comment.id, {
-    enabled: loadReplies,
-  });
+  const { comments: replies } = useGetComments(
+    { postId: comment.postId, parentId: comment.id, order: "asc" },
+    { enabled: loadReplies }
+  );
 
   return (
     <ThreadContainer depth={depth}>

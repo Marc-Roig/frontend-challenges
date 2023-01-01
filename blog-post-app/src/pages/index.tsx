@@ -11,7 +11,9 @@ import { AiOutlineArrowDown } from "react-icons/ai";
 const POST_ID = "clcc3dbae0001n0ro69sj8lut";
 
 const Home: NextPage = () => {
-  const { comments, fetchNextPage, hasNextPage} = useGetComments(POST_ID);
+  const { comments, fetchNextPage, hasNextPage } = useGetComments({
+    postId: POST_ID,
+  });
 
   return (
     <>

@@ -11,7 +11,6 @@ const mapCommentFromDB = (
     };
   }>
 ): IComment => {
-  console.log("comment", comment.likedBy);
   return {
     id: comment.id,
     content: comment.content,

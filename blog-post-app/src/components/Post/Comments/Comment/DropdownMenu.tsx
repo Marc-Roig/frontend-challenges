@@ -11,7 +11,7 @@ import useEditingComment from "../hooks/useEditingComment";
 function CommentDropdownMenu({ comment }: { comment: IComment }) {
   const { deleteComment } = useQueryUpdateComments(comment.postId);
   const deleteCommentMut = trpc.comment.deleteComment.useMutation({
-    onSuccess: () => {
+    onMutate: () => {
       deleteComment(comment);
     },
   });

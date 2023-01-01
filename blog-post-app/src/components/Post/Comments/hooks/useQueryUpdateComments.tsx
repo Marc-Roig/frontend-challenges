@@ -47,13 +47,15 @@ const commentUtils = (postId: string) => {
       // Using trpc utility, iterate over all pages of comments and
       // the callback method will be applied to each comment
       return utils.comment.getComments.setInfiniteData(
-        { postId, parentId },
+        { postId, parentId, order: parentId ? "asc" : undefined },
         (data) => mapPagesComments(callback, data)
       );
     },
     addNewComment: (comment: IComment, callback: MapCallback) => {
+      const parentId = comment.replyFrom?.id;
+
       return utils.comment.getComments.setInfiniteData(
-        { postId, parentId: comment.replyFrom?.id },
+        { postId, parentId: parentId, order: parentId ? "asc" : undefined },
         (data) => {
           // If there is no data, create a new page with the comment
           const firstPage = data?.pages?.at(0);
@@ -75,10 +77,26 @@ const useQueryUpdateComments = (postId: string) => {
 
   const addNewComment = (comment: IComment) => {
     // Add comment to the first page
-    utils.addNewComment(comment, (c, { idx, pageIdx }) => {
-      if (idx === 0 && pageIdx === 0) return [comment, c];
-      return c;
-    });
+    utils.addNewComment(
+      comment,
+      (c, { idx, pageIdx, numComments, numPages }) => {
+        const isReply = c.replyFrom?.id;
+
+        // Add it to the top
+        if (!isReply) {
+          const isFirstPage = pageIdx === 0;
+          const isFirstComment = idx === 0;
+          if (isFirstPage && isFirstComment) return [comment, c];
+        }
+        // If its a reply, add it to the bottom
+        if (isReply) {
+          const isLastPage = pageIdx === numPages - 1;
+          const isLastComment = idx === numComments - 1;
+          if (isLastPage && isLastComment) return [c, comment];
+        }
+        return c;
+      }
+    );
 
     // In nested comments, to update the list of replies for the parent comment
     // we have to access react-query data from the grandparent comment

@@ -1,32 +1,31 @@
 import type IComment from "@/types/Comment";
-import { trpc } from "@/utils/trpc";
+import { type RouterInputs, trpc } from "@/utils/trpc";
 import { useSession } from "next-auth/react";
 import { getCommentFromContent } from "../AddComment.tsx/utils";
 import useQueryUpdateComments from "./useQueryUpdateComments";
 
-interface AddCommentProps {
-  postId: string;
-  parentComment?: IComment;
-  onMutate?: (comment: Partial<IComment>) => void;
-}
-
 export const useGetComments = (
-  postId: string,
-  parentId?: string,
+  data: RouterInputs["comment"]["getComments"],
   options?: {
     enabled?: boolean;
   }
 ) => {
-  const result = trpc.comment.getComments.useInfiniteQuery(
-    { postId, parentId },
-    { getNextPageParam: (lastPage) => lastPage.nextCursor, ...options }
-  );
+  const result = trpc.comment.getComments.useInfiniteQuery(data, {
+    getNextPageParam: (lastPage) => lastPage.nextCursor,
+    ...options,
+  });
 
   return {
     ...result,
     comments: result.data?.pages.flatMap((page) => page.comments),
   };
 };
+
+interface AddCommentProps {
+  postId: string;
+  parentComment?: IComment;
+  onMutate?: (comment: Partial<IComment>) => void;
+}
 
 export const useAddComment = ({
   postId,

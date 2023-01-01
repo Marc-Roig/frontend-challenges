@@ -9,17 +9,17 @@ export const ThreadContainer = tw.div<{ depth: number }>`
 `;
 
 export const CommentContainer = tw.div`
-  border2
+  border
   surface-container 
   flex 
   w-full 
   flex-grow 
   flex-col 
-  items-start 
-  gap-4 
-  rounded-xl 
-  border-brand-border 
-  p-6 
+  items-start
+  gap-4
+  rounded-xl
+  border-brand-border
+  p-6
   shadow-sm
 `;
 

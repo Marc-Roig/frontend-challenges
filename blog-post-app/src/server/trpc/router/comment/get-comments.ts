@@ -9,6 +9,8 @@ const getComments = publicProcedure
       parentId: z.string().optional(),
       cursor: z.string().optional(),
       limit: z.number().optional().default(4),
+      orderBy: z.string().optional().default("createdAt"),
+      order: z.enum(["desc", "asc"]).optional().default("desc"), // newest first
     })
   )
   .query(async ({ ctx, input }) => {
@@ -24,7 +26,7 @@ const getComments = publicProcedure
           }
         : undefined,
       orderBy: {
-        createdAt: "desc", // newest first
+        [input.orderBy]: input.order,
       },
       include: {
         replies: true,

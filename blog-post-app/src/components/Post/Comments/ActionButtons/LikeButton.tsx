@@ -12,6 +12,7 @@ function LikeButton({ comment }: { comment: IComment }) {
   const like = trpc.comment.like.useMutation({
     onMutate: () => updateCommentLikes(comment, true),
   });
+  
   const unlike = trpc.comment.unlike.useMutation({
     onMutate: () => updateCommentLikes(comment, false),
   });
