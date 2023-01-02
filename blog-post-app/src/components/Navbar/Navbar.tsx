@@ -13,8 +13,11 @@ function Navbar() {
   const { theme, toggleTheme } = useTheme();
   const { isPinned, ref: navBarRef } = useIsPinned<HTMLDivElement>();
 
-  const { status } = useSession();
+  const { status, data: session } = useSession();
   const isLogged = status === "authenticated";
+
+  const image = session?.user?.image;
+  console.log(image);
 
   return (
     <div
@@ -34,7 +37,7 @@ function Navbar() {
               className="my-0.5"
               items={[{ label: "Log out", onClick: signOut, color: "red" }]}
             >
-              <Avatar status="online" size="md" />
+              <Avatar src={image || undefined} status="online" size="md" />
             </DropdownMenu>
           </>
         ) : (

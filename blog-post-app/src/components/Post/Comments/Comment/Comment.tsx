@@ -20,6 +20,7 @@ import CommentDropdownMenu from "./DropdownMenu";
 import useEditingComment from "../hooks/useEditingComment";
 import { useGetComments } from "../hooks/useComments";
 import Avatar from "@/components/ui/Avatar/Avatar";
+import { trpc } from "@/utils/trpc";
 
 interface CommentProps {
   comment: IComment;
@@ -61,12 +62,19 @@ function Comment({
   setCreateNewReply: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const { user } = useSessionUser();
+  const { data: authorUser } = trpc.user.getProfile.useQuery({
+    id: comment.author.id,
+  });
 
   return (
     <CommentContainer>
       <Header>
         <PostInfo>
-          <Avatar size={"sm"} className="mr-1" />
+          <Avatar
+            size={"sm"}
+            className="mr-1"
+            src={authorUser?.image || undefined}
+          />
           <Author>
             {comment.author.id === user?.id ? "You" : comment.author.name}
           </Author>

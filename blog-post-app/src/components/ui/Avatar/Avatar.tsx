@@ -67,6 +67,7 @@ function Avatar({
   radius,
   size,
   status,
+  src,
   ...props
 }: MergeComponentProps<"img", AvatarProps>) {
   const imgSize = getSize(size);
@@ -77,7 +78,7 @@ function Avatar({
         className={cn(avatar({ radius }), props.className)}
         width={imgSize}
         height={imgSize}
-        src={props.src || "/owl.png"}
+        src={src || "/owl.png"}
         alt=""
       />
       {status && <span className={indicator({ status, size })} />}
