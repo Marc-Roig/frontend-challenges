@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { protectedProcedure } from "../../trpc";
+import { publicProcedure } from "../../trpc";
 
-const getProfile = protectedProcedure
+const getProfile = publicProcedure
   .input(
     z.object({
       id: z.string(),
@@ -15,7 +15,6 @@ const getProfile = protectedProcedure
       select: {
         id: true,
         name: true,
-        email: true,
         image: true,
       },
     });
