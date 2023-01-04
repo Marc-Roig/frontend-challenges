@@ -26,7 +26,6 @@ export function Comment({
   comment: CommentType;
   depth?: number;
 }) {
-  const CommentContainer = <></>;
   return (
     <ThreadBorder addBorder={depth > 0}>
       <ThreadContainer addMargin={depth > 0}>
