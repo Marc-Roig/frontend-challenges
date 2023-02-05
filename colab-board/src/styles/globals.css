@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* https://web.dev/building-a-color-scheme/ */
+html {
+    /* brand foundation */
+    --brand-hue: 272;
+    --brand-saturation: 72%;
+    --brand-lightness: 47%;
+
+    background-color: var(--surface-background);
+    color: var(--text1);
+
+}
+
+.light {
+  color-scheme: light;
+  
+  --text1: hsl(var(--brand-hue) var(--brand-saturation) 10%);
+  --text2: hsl(var(--brand-hue) 30% 30%);
+
+  --surface-background: hsl(240 5% 94%);
+  --surface-container: hsl(200 20% 99%);
+  --surface-content: hsl(210 10% 89%);
+  --surface-highlight: hsl(210 10% 86%);
+
+  --border: hsl(200 13% 85%);
+  --border-focus: hsl(220 20% 81%);
+}
+
+.dark {
+  color-scheme: dark;
+
+  --text1: hsl(0 15% 95%);
+  --text2: hsl(218 11% 65%);
+
+  --surface-background: hsl(221 39% 11%);
+  --surface-container: hsl(215 28% 17%);
+  --surface-content: hsl(217 19%  27%);
+  --surface-highlight: hsl(214, 13%, 34%);
+  
+  --border: hsl(217 19% 27%);
+  --border-focus: hsl(217 19% 40%);
+}
+/* 
+.surface-background {
+  @apply bg-surface-background text-brand-subtleText;
+}
+
+.surface-container {
+  @apply bg-surface-container text-brand-subtleText;
+}
+
+.surface-content { 
+  @apply bg-surface-content text-brand-text;
+}
+
+.surface-highlight {
+  @apply bg-surface-highlight text-brand-text;
+} */
