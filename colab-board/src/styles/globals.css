@@ -43,7 +43,7 @@ html {
   --border: hsl(217 19% 27%);
   --border-focus: hsl(217 19% 40%);
 }
-
+/* 
 .surface-background {
   @apply bg-surface-background text-brand-subtleText;
 }
@@ -58,4 +58,4 @@ html {
 
 .surface-highlight {
   @apply bg-surface-highlight text-brand-text;
-}
+} */
