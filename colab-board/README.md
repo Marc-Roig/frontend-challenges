@@ -20,3 +20,9 @@ $ npm start
 * [roughJS](https://roughjs.com/)
 * [@dwelle/tunnel-rat](https://github.com/pmndrs/tunnel-rat)
 * [react-multi-cursor](https://github.com/maximebonhomme/React-Multi-Cursor)
+
+
+## Ideas
+
+https://github.com/raimohanska/ourboard/blob/master/backend/src/uwebsockets-server.ts
+https://github.com/shadcn/ui/blob/main/apps/www/components/apple-music-demo.tsx#L181
